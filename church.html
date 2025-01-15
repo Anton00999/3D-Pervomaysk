@@ -196,6 +196,24 @@
                 fullscreen.style.display = 'none';
             });
         });
+        
+        galleryOverlay.addEventListener('wheel', (e) => {
+    if (e.deltaY > 0) {
+        // Перехід до наступної фотографії
+        let nextImg = document.querySelector('.gallery img:not([style*="display: none"])');
+        if (nextImg && nextImg.nextElementSibling) {
+            nextImg.style.display = 'none';
+            nextImg.nextElementSibling.style.display = 'block';
+        }
+    } else {
+        // Перехід до попередньої фотографії
+        let prevImg = document.querySelector('.gallery img:not([style*="display: none"])');
+        if (prevImg && prevImg.previousElementSibling) {
+            prevImg.style.display = 'none';
+            prevImg.previousElementSibling.style.display = 'block';
+        }
+    }
+});
 
         images.forEach(image => {
             image.addEventListener('click', () => {
