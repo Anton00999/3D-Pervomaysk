@@ -36,7 +36,7 @@
 
         .gallery-button {
             position: fixed;
-            bottom: 10px;
+            bottom: 50px; /* Зміщення, щоб не перекривати кнопку повернення */
             left: 10px;
             font-size: 1rem;
             color: white;
@@ -67,15 +67,15 @@
 
         .gallery {
             display: flex;
-            gap: 10px;
             flex-wrap: wrap;
+            gap: 10px;
             justify-content: center;
             max-width: 90%;
         }
 
         .gallery img {
-            width: 150px;
-            height: auto;
+            height: 150px;
+            object-fit: cover;
             border: 2px solid white;
             cursor: pointer;
             transition: transform 0.3s;
@@ -118,7 +118,7 @@
 <body>
     <h1>Вокзал, 1867р</h1>
     <model-viewer src="station.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
-    <button class="gallery-button">Переглянути галерею</button>
+    <a href="index.html" class="gallery-button">Переглянути галерею</a>
 
     <div class="gallery-overlay">
         <div class="close">&times;</div>
@@ -126,6 +126,7 @@
             <img src="station1.jpg" alt="Фото 1">
             <img src="station2.jpg" alt="Фото 2">
             <img src="station3.jpg" alt="Фото 3">
+            <!-- Додайте більше фото за потреби -->
         </div>
     </div>
 
@@ -142,7 +143,8 @@
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
 
-        galleryButton.addEventListener('click', () => {
+        galleryButton.addEventListener('click', (e) => {
+            e.preventDefault();
             galleryOverlay.style.display = 'flex';
         });
 
