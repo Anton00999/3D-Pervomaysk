@@ -130,10 +130,11 @@
             width: 100%;
             height: 100%;
             background: black;
-            display: none;
+            display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1001;
+            display: none;
         }
 
         .fullscreen img {
@@ -141,41 +142,29 @@
             max-height: 90%;
         }
 
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 1002;
-        }
-
         .fullscreen-navigation {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             display: none;
-            z-index: 1003;
-            width: 100%;
-            display: flex;
             justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+            z-index: 1002;
         }
 
-        .prev-btn,
-        .next-btn {
-            font-size: 3rem;
+        .fullscreen-navigation .arrow {
+            font-size: 2rem;
             color: white;
-            background: transparent;
-            border: none;
             cursor: pointer;
-            margin: 0 20px;
-            transition: color 0.3s;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
         }
 
-        .prev-btn:hover,
-        .next-btn:hover {
-            color: #007bff;
+        .fullscreen-navigation .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.7);
         }
     </style>
 </head>
@@ -202,11 +191,10 @@
     <div class="fullscreen">
         <div class="close">&times;</div>
         <img src="" alt="Full Image">
-    </div>
-
-    <div class="fullscreen-navigation">
-        <button class="prev-btn">&lt;</button>
-        <button class="next-btn">&gt;</button>
+        <div class="fullscreen-navigation">
+            <button class="arrow left-arrow">&lt;</button>
+            <button class="arrow right-arrow">&gt;</button>
+        </div>
     </div>
 
     <script>
@@ -217,10 +205,11 @@
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
         const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
-        const prevButton = document.querySelector('.prev-btn');
-        const nextButton = document.querySelector('.next-btn');
-
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        
         let currentIndex = 0;
+        const imageArray = ["church1.jpg", "church2.jpg", "church3.jpg"];
 
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
@@ -230,7 +219,7 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Сховати стрілочки при виході
+                fullscreenNavigation.style.display = 'none';
             });
         });
 
@@ -238,26 +227,19 @@
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                fullscreenNavigation.style.display = 'flex';  // Показати стрілочки при перегляді в повний розмір
                 currentIndex = index;
+                fullscreenNavigation.style.display = 'flex';
             });
         });
 
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            fullscreenImg.src = images[currentIndex].src;
+        leftArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? imageArray.length - 1 : currentIndex - 1;
+            fullscreenImg.src = imageArray[currentIndex];
         });
 
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % images.length;
-            fullscreenImg.src = images[currentIndex].src;
-        });
-
-        fullscreen.addEventListener('click', (event) => {
-            if (event.target === fullscreen) {
-                fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Сховати стрілочки при виході
-            }
+        rightArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex === imageArray.length - 1) ? 0 : currentIndex + 1;
+            fullscreenImg.src = imageArray[currentIndex];
         });
     </script>
 </body>
