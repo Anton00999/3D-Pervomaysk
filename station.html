@@ -34,10 +34,28 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
+        .back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1rem;
+            color: white;
+            background: #007bff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #0056b3;
+        }
+
         .gallery-button {
             position: fixed;
-            bottom: 50px; /* Зміщення, щоб не перекривати кнопку повернення */
-            left: 10px;
+            bottom: 10px;
+            right: 10px;
             font-size: 1rem;
             color: white;
             background: #28a745;
@@ -118,7 +136,8 @@
 <body>
     <h1>Вокзал, 1867р</h1>
     <model-viewer src="station.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
-    <a href="index.html" class="gallery-button">Переглянути галерею</a>
+    <a href="index.html" class="back-button">Повернутися</a>
+    <a href="#" class="gallery-button">Переглянути галерею</a>
 
     <div class="gallery-overlay">
         <div class="close">&times;</div>
@@ -126,7 +145,17 @@
             <img src="station1.jpg" alt="Фото 1">
             <img src="station2.jpg" alt="Фото 2">
             <img src="station3.jpg" alt="Фото 3">
-            <!-- Додайте більше фото за потреби -->
+            <img src="station4.jpg" alt="Фото 4">
+            <img src="station5.jpg" alt="Фото 5">
+            <img src="station6.jpg" alt="Фото 6">
+            <img src="station7.jpg" alt="Фото 7">
+            <img src="station8.jpg" alt="Фото 8">
+            <img src="station9.jpg" alt="Фото 9">
+            <img src="station10.jpg" alt="Фото 10">
+            <img src="station11.jpg" alt="Фото 11">
+            <img src="station12.jpg" alt="Фото 12">
+            <img src="station13.jpg" alt="Фото 13">
+            <img src="station14.jpg" alt="Фото 14">
         </div>
     </div>
 
