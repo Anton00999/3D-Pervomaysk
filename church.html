@@ -63,28 +63,35 @@
         }
 
         .gallery-preview img {
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
             border-radius: 5px;
-            transform: rotate(10deg);
             transition: transform 0.3s;
         }
 
         .gallery-preview img:nth-child(1) {
-            transform: rotate(-10deg);
+            transform: rotate(10deg);
+        }
+
+        .gallery-preview img:hover:nth-child(1) {
+            transform: rotate(5deg);
         }
 
         .gallery-preview img:nth-child(2) {
-            transform: rotate(15deg);
+            transform: rotate(-10deg);
         }
 
         .gallery-preview img:nth-child(3) {
-            transform: rotate(-20deg);
+            transform: rotate(10deg);
         }
 
-        .gallery-preview img:hover {
-            transform: rotate(0deg);
+        .gallery-preview:hover img:nth-child(2) {
+            transform: rotate(-5deg);
+        }
+
+        .gallery-preview:hover img:nth-child(3) {
+            transform: rotate(5deg);
         }
 
         .gallery-overlay {
@@ -109,8 +116,7 @@
         }
 
         .gallery img {
-            max-width: 300px;
-            height: auto;
+            height: 150px;
             object-fit: contain;
             border: 2px solid white;
             cursor: pointer;
@@ -182,7 +188,7 @@
     <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
-        <img src="church1.jpg" alt="Фото 1">
+        <img src="church1.jpg" alt="Фото 1" class="rotating-img">
         <img src="church2.jpg" alt="Фото 2">
         <img src="church3.jpg" alt="Фото 3">
     </div>
@@ -216,7 +222,6 @@
         const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
         const prevButton = document.querySelector('.prev-btn');
         const nextButton = document.querySelector('.next-btn');
-        const previewImages = document.querySelectorAll('.gallery-preview img');
 
         let currentIndex = 0;
 
@@ -229,21 +234,6 @@
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
                 fullscreenNavigation.style.display = 'none';
-            });
-        });
-
-        previewImages.forEach(image => {
-            image.addEventListener('mouseenter', () => {
-                previewImages.forEach(img => {
-                    img.style.transform = 'rotate(0deg)';
-                });
-            });
-
-            image.addEventListener('mouseleave', () => {
-                previewImages.forEach((img, index) => {
-                    const rotationAngles = [-10, 15, -20];
-                    img.style.transform = `rotate(${rotationAngles[index]}deg)`;
-                });
             });
         });
 
