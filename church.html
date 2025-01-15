@@ -130,11 +130,10 @@
             width: 100%;
             height: 100%;
             background: black;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1001;
-            display: none;
         }
 
         .fullscreen img {
@@ -231,6 +230,7 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';  // Сховати стрілочки при виході
             });
         });
 
@@ -238,7 +238,7 @@
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                fullscreenNavigation.style.display = 'flex';
+                fullscreenNavigation.style.display = 'flex';  // Показати стрілочки при перегляді в повний розмір
                 currentIndex = index;
             });
         });
@@ -256,7 +256,7 @@
         fullscreen.addEventListener('click', (event) => {
             if (event.target === fullscreen) {
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';  // Сховати стрілочки при виході
             }
         });
     </script>
