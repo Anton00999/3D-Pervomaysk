@@ -141,6 +141,30 @@
             max-width: 90%;
             max-height: 90%;
         }
+        .fullscreen-navigation {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .prev-btn, .next-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 2rem;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
 
         .close {
             position: absolute;
@@ -178,6 +202,11 @@
         <img src="" alt="Full Image">
     </div>
 
+    <div class="fullscreen-navigation">
+        <button class="prev-btn">&#10094;</button>
+        <button class="next-btn">&#10095;</button>
+    </div>
+
     <script>
         const galleryPreview = document.querySelector('.gallery-preview');
         const galleryOverlay = document.querySelector('.gallery-overlay');
@@ -196,24 +225,6 @@
                 fullscreen.style.display = 'none';
             });
         });
-        
-        galleryOverlay.addEventListener('wheel', (e) => {
-    if (e.deltaY > 0) {
-        // Перехід до наступної фотографії
-        let nextImg = document.querySelector('.gallery img:not([style*="display: none"])');
-        if (nextImg && nextImg.nextElementSibling) {
-            nextImg.style.display = 'none';
-            nextImg.nextElementSibling.style.display = 'block';
-        }
-    } else {
-        // Перехід до попередньої фотографії
-        let prevImg = document.querySelector('.gallery img:not([style*="display: none"])');
-        if (prevImg && prevImg.previousElementSibling) {
-            prevImg.style.display = 'none';
-            prevImg.previousElementSibling.style.display = 'block';
-        }
-    }
-});
 
         images.forEach(image => {
             image.addEventListener('click', () => {
@@ -222,5 +233,31 @@
             });
         });
     </script>
+    let currentImageIndex = 0;
+const galleryImages = document.querySelectorAll('.gallery img');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+function updateFullscreenImage() {
+    fullscreenImg.src = galleryImages[currentImageIndex].src;
+}
+
+prevBtn.addEventListener('click', () => {
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+    } else {
+        currentImageIndex = galleryImages.length - 1;  // Перехід до останньої фотографії
+    }
+    updateFullscreenImage();
+});
+
+nextBtn.addEventListener('click', () => {
+    if (currentImageIndex < galleryImages.length - 1) {
+        currentImageIndex++;
+    } else {
+        currentImageIndex = 0;  // Перехід до першої фотографії
+    }
+    updateFullscreenImage();
+});
 </body>
 </html>
