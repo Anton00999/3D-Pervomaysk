@@ -15,6 +15,7 @@
             background: linear-gradient(135deg, #dfe7fd, #b2cefe);
             color: white;
             font-family: Arial, sans-serif;
+            position: relative;
         }
 
         model-viewer {
@@ -52,22 +53,41 @@
             background: #0056b3;
         }
 
-        .gallery-button {
+        .gallery-preview {
             position: fixed;
             bottom: 10px;
             right: 10px;
-            font-size: 1rem;
-            color: white;
-            background: #28a745;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
+            display: flex;
+            gap: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        .gallery-button:hover {
-            background: #218838;
+        .gallery-preview img {
+            height: 60px;
+            width: auto;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-preview img:nth-child(1) {
+            transform: rotate(0deg);
+        }
+
+        .gallery-preview img:nth-child(2) {
+            transform: rotate(-10deg);
+        }
+
+        .gallery-preview img:nth-child(3) {
+            transform: rotate(10deg);
+        }
+
+        .gallery-preview:hover img:nth-child(2) {
+            transform: rotate(-5deg);
+        }
+
+        .gallery-preview:hover img:nth-child(3) {
+            transform: rotate(5deg);
         }
 
         .gallery-overlay {
@@ -93,7 +113,7 @@
 
         .gallery img {
             height: 150px;
-            object-fit: cover;
+            object-fit: contain;
             border: 2px solid white;
             cursor: pointer;
             transition: transform 0.3s;
@@ -137,7 +157,12 @@
     <h1>Вокзал, 1867р</h1>
     <model-viewer src="station.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
     <a href="index.html" class="back-button">Повернутися</a>
-    <a href="#" class="gallery-button">Переглянути галерею</a>
+    
+    <div class="gallery-preview">
+        <img src="station1.jpg" alt="Фото 1">
+        <img src="station2.jpg" alt="Фото 2">
+        <img src="station3.jpg" alt="Фото 3">
+    </div>
 
     <div class="gallery-overlay">
         <div class="close">&times;</div>
@@ -165,15 +190,14 @@
     </div>
 
     <script>
-        const galleryButton = document.querySelector('.gallery-button');
+        const galleryPreview = document.querySelector('.gallery-preview');
         const galleryOverlay = document.querySelector('.gallery-overlay');
         const closeButtons = document.querySelectorAll('.close');
         const images = document.querySelectorAll('.gallery img');
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
 
-        galleryButton.addEventListener('click', (e) => {
-            e.preventDefault();
+        galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
         });
 
