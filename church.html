@@ -63,16 +63,28 @@
         }
 
         .gallery-preview img {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             object-fit: cover;
             border-radius: 5px;
             transform: rotate(10deg);
             transition: transform 0.3s;
         }
 
+        .gallery-preview img:nth-child(1) {
+            transform: rotate(-10deg);
+        }
+
+        .gallery-preview img:nth-child(2) {
+            transform: rotate(15deg);
+        }
+
+        .gallery-preview img:nth-child(3) {
+            transform: rotate(-20deg);
+        }
+
         .gallery-preview img:hover {
-            transform: rotate(5deg);
+            transform: rotate(0deg);
         }
 
         .gallery-overlay {
@@ -97,7 +109,8 @@
         }
 
         .gallery img {
-            height: 150px;
+            max-width: 300px;
+            height: auto;
             object-fit: contain;
             border: 2px solid white;
             cursor: pointer;
@@ -169,7 +182,7 @@
     <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
-        <img src="church1.jpg" alt="Фото 1" class="rotating-img">
+        <img src="church1.jpg" alt="Фото 1">
         <img src="church2.jpg" alt="Фото 2">
         <img src="church3.jpg" alt="Фото 3">
     </div>
@@ -222,13 +235,14 @@
         previewImages.forEach(image => {
             image.addEventListener('mouseenter', () => {
                 previewImages.forEach(img => {
-                    img.style.transform = 'rotate(5deg)';
+                    img.style.transform = 'rotate(0deg)';
                 });
             });
 
             image.addEventListener('mouseleave', () => {
-                previewImages.forEach(img => {
-                    img.style.transform = 'rotate(10deg)';
+                previewImages.forEach((img, index) => {
+                    const rotationAngles = [-10, 15, -20];
+                    img.style.transform = `rotate(${rotationAngles[index]}deg)`;
                 });
             });
         });
