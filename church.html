@@ -58,10 +58,8 @@
             bottom: 10px;
             right: 10px;
             display: flex;
-            flex-direction: column-reverse;
-            gap: -10px;
+            gap: 5px;
             cursor: pointer;
-            z-index: 10;
         }
 
         .gallery-preview img {
@@ -73,7 +71,7 @@
         }
 
         .gallery-preview img:nth-child(1) {
-            transform: rotate(0deg);
+            transform: rotate(5deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -107,6 +105,7 @@
 
         .gallery {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
             max-width: 90%;
@@ -171,6 +170,7 @@
             <img src="church1.jpg" alt="Фото 1">
             <img src="church2.jpg" alt="Фото 2">
             <img src="church3.jpg" alt="Фото 3">
+        </div>
     </div>
 
     <div class="fullscreen">
