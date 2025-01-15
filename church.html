@@ -64,11 +64,10 @@
 
         .gallery-preview img:nth-child(1) {
             transform: rotate(10deg);
-            transition: transform 0.3s ease;
         }
 
-        .gallery-preview img:nth-child(1):hover {
-            transform: rotate(0deg);
+        .gallery-preview .rotating-img:hover {
+            transform: rotate(5deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -181,7 +180,7 @@
     <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
-        <img src="church1.jpg" alt="Фото 1">
+        <img src="church1.jpg" alt="Фото 1" class="rotating-img">
         <img src="church2.jpg" alt="Фото 2">
         <img src="church3.jpg" alt="Фото 3">
     </div>
