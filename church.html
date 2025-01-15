@@ -74,16 +74,16 @@
             transform: rotate(5deg); /* Slight tilt */
         }
 
-        .gallery-preview:hover img:nth-child(1) {
-            transform: rotate(0deg); /* Returns to normal when hovered */
-        }
-
         .gallery-preview img:nth-child(2) {
             transform: rotate(-10deg);
         }
 
         .gallery-preview img:nth-child(3) {
             transform: rotate(10deg);
+        }
+
+        .gallery-preview:hover img:nth-child(1) {
+            transform: rotate(0deg); /* Returns to normal on hover */
         }
 
         .gallery-preview:hover img:nth-child(2) {
@@ -184,22 +184,22 @@
     </style>
 </head>
 <body>
-    <h1>St. Nicholas Church</h1>
+    <h1>Церква Святого Миколая</h1>
     <model-viewer src="church.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
-    <a href="index.html" class="back-button">Back</a>
+    <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
-        <img src="church1.jpg" alt="Photo 1">
-        <img src="church2.jpg" alt="Photo 2">
-        <img src="church3.jpg" alt="Photo 3">
+        <img src="church1.jpg" alt="Фото 1">
+        <img src="church2.jpg" alt="Фото 2">
+        <img src="church3.jpg" alt="Фото 3">
     </div>
 
     <div class="gallery-overlay">
         <div class="close">&times;</div>
         <div class="gallery">
-            <img src="church1.jpg" alt="Photo 1">
-            <img src="church2.jpg" alt="Photo 2">
-            <img src="church3.jpg" alt="Photo 3">
+            <img src="church1.jpg" alt="Фото 1">
+            <img src="church2.jpg" alt="Фото 2">
+            <img src="church3.jpg" alt="Фото 3">
         </div>
     </div>
 
@@ -234,7 +234,7 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Hide navigation arrows when exiting
+                fullscreenNavigation.style.display = 'none';  // Hide arrows when exiting fullscreen
             });
         });
 
@@ -242,7 +242,7 @@
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                fullscreenNavigation.style.display = 'flex';  // Show navigation arrows in fullscreen mode
+                fullscreenNavigation.style.display = 'flex';  // Show arrows in fullscreen mode
                 currentIndex = index;
             });
         });
@@ -260,7 +260,7 @@
         fullscreen.addEventListener('click', (event) => {
             if (event.target === fullscreen) {
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Hide navigation arrows when exiting fullscreen
+                fullscreenNavigation.style.display = 'none';  // Hide arrows when exiting fullscreen
             }
         });
     </script>
