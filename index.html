@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ff7c7c, #ffb3b3);
+            background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
             color: white;
             font-family: 'Arial', sans-serif;
             text-align: center;
@@ -19,6 +19,7 @@
 
         .container {
             text-align: center;
+            padding: 20px;
         }
 
         h1 {
@@ -27,12 +28,23 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         a {
             font-size: 1.5rem;
             text-decoration: none;
             color: #fff;
             background: #4CAF50;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
@@ -40,13 +52,30 @@
         a:hover {
             background: #45a049;
         }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .links a {
+                font-size: 1.2rem;
+                padding: 12px 25px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Ласкаво просимо на головну сторінку</h1>
-        <p>Перейдіть на сторінку церкви для перегляду 3D моделі:</p>
-        <a href="church.html">Переглянути модель церкви</a>
+        <p>Перейдіть на одну з нижченаведених сторінок для перегляду моделей:</p>
+        <div class="links">
+            <a href="church.html">Переглянути модель церкви</a>
+            <a href="station.html">Переглянути модель вокзалу</a>
+            <!-- Можна додавати більше посилань тут -->
+        </div>
     </div>
 </body>
 </html>
