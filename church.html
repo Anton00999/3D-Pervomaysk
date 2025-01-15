@@ -70,27 +70,7 @@
             transition: transform 0.3s;
         }
 
-        .gallery-preview img:nth-child(1) {
-            transform: rotate(10deg);
-        }
-
-        .gallery-preview img:hover:nth-child(1) {
-            transform: rotate(5deg);
-        }
-
-        .gallery-preview img:nth-child(2) {
-            transform: rotate(-10deg);
-        }
-
-        .gallery-preview img:nth-child(3) {
-            transform: rotate(10deg);
-        }
-
-        .gallery-preview:hover img:nth-child(2) {
-            transform: rotate(-5deg);
-        }
-
-        .gallery-preview:hover img:nth-child(3) {
+        .gallery-preview img:hover {
             transform: rotate(5deg);
         }
 
@@ -222,6 +202,7 @@
         const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
         const prevButton = document.querySelector('.prev-btn');
         const nextButton = document.querySelector('.next-btn');
+        const previewImages = document.querySelectorAll('.gallery-preview img');
 
         let currentIndex = 0;
 
@@ -234,6 +215,20 @@
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
                 fullscreenNavigation.style.display = 'none';
+            });
+        });
+
+        previewImages.forEach(image => {
+            image.addEventListener('mouseenter', () => {
+                previewImages.forEach(img => {
+                    img.style.transform = 'rotate(5deg)';
+                });
+            });
+
+            image.addEventListener('mouseleave', () => {
+                previewImages.forEach(img => {
+                    img.style.transform = '';
+                });
             });
         });
 
