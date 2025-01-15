@@ -34,27 +34,131 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
-        .back-link {
+        .gallery-button {
             position: fixed;
             bottom: 10px;
             left: 10px;
             font-size: 1rem;
             color: white;
-            background: #007bff;
+            background: #28a745;
             padding: 8px 15px;
             border-radius: 5px;
             text-decoration: none;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .back-link:hover {
-            background: #0056b3;
+        .gallery-button:hover {
+            background: #218838;
+        }
+
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .gallery {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: auto;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            display: none;
+        }
+
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
         }
     </style>
 </head>
 <body>
     <h1>Вокзал, 1867р</h1>
     <model-viewer src="station.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
-    <a href="index.html" class="back-link">Повернутися на головну</a>
+    <button class="gallery-button">Переглянути галерею</button>
+
+    <div class="gallery-overlay">
+        <div class="close">&times;</div>
+        <div class="gallery">
+            <img src="photo1.jpg" alt="Фото 1">
+            <img src="photo2.jpg" alt="Фото 2">
+            <img src="photo3.jpg" alt="Фото 3">
+        </div>
+    </div>
+
+    <div class="fullscreen">
+        <div class="close">&times;</div>
+        <img src="" alt="Full Image">
+    </div>
+
+    <script>
+        const galleryButton = document.querySelector('.gallery-button');
+        const galleryOverlay = document.querySelector('.gallery-overlay');
+        const closeButtons = document.querySelectorAll('.close');
+        const images = document.querySelectorAll('.gallery img');
+        const fullscreen = document.querySelector('.fullscreen');
+        const fullscreenImg = fullscreen.querySelector('img');
+
+        galleryButton.addEventListener('click', () => {
+            galleryOverlay.style.display = 'flex';
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                galleryOverlay.style.display = 'none';
+                fullscreen.style.display = 'none';
+            });
+        });
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                fullscreenImg.src = image.src;
+                fullscreen.style.display = 'flex';
+            });
+        });
+    </script>
 </body>
 </html>
