@@ -130,11 +130,10 @@
             width: 100%;
             height: 100%;
             background: black;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1001;
-            display: none;
         }
 
         .fullscreen img {
@@ -142,29 +141,40 @@
             max-height: 90%;
         }
 
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
         .fullscreen-navigation {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            display: none;
+            display: flex;
             justify-content: space-between;
             width: 100%;
-            padding: 0 20px;
-            z-index: 1002;
+            z-index: 1003;
         }
 
-        .fullscreen-navigation .arrow {
-            font-size: 2rem;
+        .prev-btn,
+        .next-btn {
+            font-size: 3rem;
             color: white;
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: transparent;
             border: none;
-            padding: 10px;
-            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 20px;
+            transition: color 0.3s;
         }
 
-        .fullscreen-navigation .arrow:hover {
-            background-color: rgba(0, 0, 0, 0.7);
+        .prev-btn:hover,
+        .next-btn:hover {
+            color: #007bff;
         }
     </style>
 </head>
@@ -191,10 +201,11 @@
     <div class="fullscreen">
         <div class="close">&times;</div>
         <img src="" alt="Full Image">
-        <div class="fullscreen-navigation">
-            <button class="arrow left-arrow">&lt;</button>
-            <button class="arrow right-arrow">&gt;</button>
-        </div>
+    </div>
+
+    <div class="fullscreen-navigation">
+        <button class="prev-btn">&lt;</button>
+        <button class="next-btn">&gt;</button>
     </div>
 
     <script>
@@ -205,11 +216,10 @@
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
         const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
-        const leftArrow = document.querySelector('.left-arrow');
-        const rightArrow = document.querySelector('.right-arrow');
-        
+        const prevButton = document.querySelector('.prev-btn');
+        const nextButton = document.querySelector('.next-btn');
+
         let currentIndex = 0;
-        const imageArray = ["church1.jpg", "church2.jpg", "church3.jpg"];
 
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
@@ -227,19 +237,26 @@
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                currentIndex = index;
                 fullscreenNavigation.style.display = 'flex';
+                currentIndex = index;
             });
         });
 
-        leftArrow.addEventListener('click', () => {
-            currentIndex = (currentIndex === 0) ? imageArray.length - 1 : currentIndex - 1;
-            fullscreenImg.src = imageArray[currentIndex];
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
         });
 
-        rightArrow.addEventListener('click', () => {
-            currentIndex = (currentIndex === imageArray.length - 1) ? 0 : currentIndex + 1;
-            fullscreenImg.src = imageArray[currentIndex];
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
+        });
+
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+            }
         });
     </script>
 </body>
