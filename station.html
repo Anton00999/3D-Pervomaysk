@@ -71,7 +71,7 @@
         }
 
         .gallery-preview img:nth-child(1) {
-            transform: rotate(5deg);
+            transform: rotate(0deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -130,11 +130,10 @@
             width: 100%;
             height: 100%;
             background: black;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1001;
-            display: none;
         }
 
         .fullscreen img {
@@ -150,6 +149,32 @@
             font-size: 2rem;
             cursor: pointer;
             z-index: 1002;
+        }
+
+        .fullscreen-navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            justify-content: space-between;
+            width: 100%;
+            z-index: 1003;
+        }
+
+        .prev-btn,
+        .next-btn {
+            font-size: 3rem;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 0 20px;
+            transition: color 0.3s;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            color: #007bff;
         }
     </style>
 </head>
@@ -181,11 +206,17 @@
             <img src="station12.jpg" alt="Фото 12">
             <img src="station13.jpg" alt="Фото 13">
             <img src="station14.jpg" alt="Фото 14">
+        </div>
     </div>
 
     <div class="fullscreen">
         <div class="close">&times;</div>
         <img src="" alt="Full Image">
+    </div>
+
+    <div class="fullscreen-navigation">
+        <button class="prev-btn">&lt;</button>
+        <button class="next-btn">&gt;</button>
     </div>
 
     <script>
@@ -195,6 +226,11 @@
         const images = document.querySelectorAll('.gallery img');
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
+        const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
+        const prevButton = document.querySelector('.prev-btn');
+        const nextButton = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
 
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
@@ -204,14 +240,34 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
             });
         });
 
-        images.forEach(image => {
+        images.forEach((image, index) => {
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
+                fullscreenNavigation.style.display = 'flex';
+                currentIndex = index;
             });
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
+        });
+
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+            }
         });
     </script>
 </body>
