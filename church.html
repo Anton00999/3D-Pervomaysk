@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Viewer</title>
+    <title>Церква Святого Миколая</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
@@ -105,6 +105,7 @@
 
         .gallery {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
             max-width: 90%;
@@ -154,27 +155,28 @@
         .fullscreen-navigation {
             position: absolute;
             top: 50%;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            z-index: 1002;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1003;
         }
 
-        .prev-btn, .next-btn {
-            background-color: rgba(0, 0, 0, 0.5);
+        .prev-btn,
+        .next-btn {
+            font-size: 3rem;
             color: white;
-            font-size: 2rem;
+            background: transparent;
             border: none;
-            padding: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            margin: 0 20px;
+            transition: color 0.3s;
         }
 
-        .prev-btn:hover, .next-btn:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .prev-btn:hover,
+        .next-btn:hover {
+            color: #007bff;
         }
+
     </style>
 </head>
 <body>
@@ -199,12 +201,11 @@
 
     <div class="fullscreen">
         <div class="close">&times;</div>
+        <div class="fullscreen-navigation">
+            <button class="prev-btn">&lt;</button>
+            <button class="next-btn">&gt;</button>
+        </div>
         <img src="" alt="Full Image">
-    </div>
-
-    <div class="fullscreen-navigation">
-        <button class="prev-btn">&#10094;</button>
-        <button class="next-btn">&#10095;</button>
     </div>
 
     <script>
@@ -216,6 +217,7 @@
         const fullscreenImg = fullscreen.querySelector('img');
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
+        const fullscreenNav = document.querySelector('.fullscreen-navigation');
         let currentImageIndex = 0;
 
         function updateFullscreenImage() {
@@ -230,6 +232,7 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
+                fullscreenNav.style.display = 'none';  // Сховати стрілочки
             });
         });
 
@@ -238,6 +241,7 @@
                 currentImageIndex = index;
                 updateFullscreenImage();
                 fullscreen.style.display = 'flex';
+                fullscreenNav.style.display = 'flex';  // Показати стрілочки
             });
         });
 
