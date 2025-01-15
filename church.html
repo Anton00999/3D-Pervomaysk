@@ -63,6 +63,11 @@
         }
 
         .gallery-preview img:nth-child(1) {
+            transform: rotate(10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-preview img:nth-child(1):hover {
             transform: rotate(0deg);
         }
 
@@ -74,15 +79,11 @@
             transform: rotate(10deg);
         }
 
-        .gallery-preview img:nth-child(1):hover {
-            transform: rotate(5deg);
-        }
-
-        .gallery-preview img:nth-child(2):hover {
+        .gallery-preview:hover img:nth-child(2) {
             transform: rotate(-5deg);
         }
 
-        .gallery-preview img:nth-child(3):hover {
+        .gallery-preview:hover img:nth-child(3) {
             transform: rotate(5deg);
         }
 
