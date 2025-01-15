@@ -58,10 +58,8 @@
             bottom: 10px;
             right: 10px;
             display: flex;
-            flex-direction: column-reverse;
-            gap: -10px;
+            gap: 5px;
             cursor: pointer;
-            z-index: 10;
         }
 
         .gallery-preview img {
@@ -73,7 +71,7 @@
         }
 
         .gallery-preview img:nth-child(1) {
-            transform: rotate(0deg);
+            transform: rotate(5deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -107,6 +105,7 @@
 
         .gallery {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
             max-width: 90%;
@@ -182,7 +181,6 @@
             <img src="station12.jpg" alt="Фото 12">
             <img src="station13.jpg" alt="Фото 13">
             <img src="station14.jpg" alt="Фото 14">
-        </div>
     </div>
 
     <div class="fullscreen">
