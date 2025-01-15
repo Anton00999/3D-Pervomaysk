@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Церква Святого Миколая</title>
+    <title>3D Model Viewer</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
@@ -155,10 +155,12 @@
         .fullscreen-navigation {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
             display: none;
             z-index: 1003;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
 
         .prev-btn,
@@ -176,7 +178,6 @@
         .next-btn:hover {
             color: #007bff;
         }
-
     </style>
 </head>
 <body>
@@ -201,11 +202,12 @@
 
     <div class="fullscreen">
         <div class="close">&times;</div>
-        <div class="fullscreen-navigation">
-            <button class="prev-btn">&lt;</button>
-            <button class="next-btn">&gt;</button>
-        </div>
         <img src="" alt="Full Image">
+    </div>
+
+    <div class="fullscreen-navigation">
+        <button class="prev-btn">&lt;</button>
+        <button class="next-btn">&gt;</button>
     </div>
 
     <script>
@@ -215,14 +217,11 @@
         const images = document.querySelectorAll('.gallery img');
         const fullscreen = document.querySelector('.fullscreen');
         const fullscreenImg = fullscreen.querySelector('img');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        const fullscreenNav = document.querySelector('.fullscreen-navigation');
-        let currentImageIndex = 0;
+        const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
+        const prevButton = document.querySelector('.prev-btn');
+        const nextButton = document.querySelector('.next-btn');
 
-        function updateFullscreenImage() {
-            fullscreenImg.src = images[currentImageIndex].src;
-        }
+        let currentIndex = 0;
 
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
@@ -232,35 +231,26 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
-                fullscreenNav.style.display = 'none';  // Сховати стрілочки
             });
         });
 
         images.forEach((image, index) => {
             image.addEventListener('click', () => {
-                currentImageIndex = index;
-                updateFullscreenImage();
+                fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                fullscreenNav.style.display = 'flex';  // Показати стрілочки
+                fullscreenNavigation.style.display = 'flex';
+                currentIndex = index;
             });
         });
 
-        prevBtn.addEventListener('click', () => {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-            } else {
-                currentImageIndex = images.length - 1;
-            }
-            updateFullscreenImage();
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
         });
 
-        nextBtn.addEventListener('click', () => {
-            if (currentImageIndex < images.length - 1) {
-                currentImageIndex++;
-            } else {
-                currentImageIndex = 0;
-            }
-            updateFullscreenImage();
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
         });
     </script>
 </body>
