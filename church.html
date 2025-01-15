@@ -67,6 +67,7 @@
             height: 50px;
             object-fit: cover;
             border-radius: 5px;
+            transform: rotate(10deg);
             transition: transform 0.3s;
         }
 
@@ -227,7 +228,7 @@
 
             image.addEventListener('mouseleave', () => {
                 previewImages.forEach(img => {
-                    img.style.transform = '';
+                    img.style.transform = 'rotate(10deg)';
                 });
             });
         });
