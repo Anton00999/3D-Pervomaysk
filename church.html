@@ -33,10 +33,28 @@
             font-size: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
+
+        .back-link {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1rem;
+            color: white;
+            background: #007bff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>Церква Святого Миколая</h1>
     <model-viewer src="church.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
+    <a href="index.html" class="back-link">Повернутися на головну</a>
 </body>
 </html>
