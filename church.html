@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Viewer</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <title>Головна сторінка</title>
     <style>
         body {
             margin: 0;
@@ -12,31 +11,42 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #dfe7fd, #b2cefe);
+            background: linear-gradient(135deg, #ff7c7c, #ffb3b3);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
         }
 
-        model-viewer {
-            width: 80vw;
-            height: 80vh;
-            border: 2px solid white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        .container {
+            text-align: center;
         }
 
         h1 {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
+            font-size: 3rem;
+            margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        a {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #fff;
+            background: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Церква Святого Миколая</h1>
-    <model-viewer src="church.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
+    <div class="container">
+        <h1>Ласкаво просимо на головну сторінку</h1>
+        <p>Перейдіть на сторінку церкви для перегляду 3D моделі:</p>
+        <a href="Church.html">Переглянути модель церкви</a>
+    </div>
 </body>
 </html>
