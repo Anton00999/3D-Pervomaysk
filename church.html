@@ -62,16 +62,8 @@
             cursor: pointer;
         }
 
-        .gallery-preview img {
-            height: 60px;
-            width: auto;
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-        }
-
         .gallery-preview img:nth-child(1) {
-            transform: rotate(5deg); /* Slight tilt */
+            transform: rotate(0deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -82,15 +74,15 @@
             transform: rotate(10deg);
         }
 
-        .gallery-preview:hover img:nth-child(1) {
-            transform: rotate(0deg); /* Returns to normal on hover */
+        .gallery-preview img:nth-child(1):hover {
+            transform: rotate(5deg);
         }
 
-        .gallery-preview:hover img:nth-child(2) {
+        .gallery-preview img:nth-child(2):hover {
             transform: rotate(-5deg);
         }
 
-        .gallery-preview:hover img:nth-child(3) {
+        .gallery-preview img:nth-child(3):hover {
             transform: rotate(5deg);
         }
 
@@ -159,10 +151,10 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            display: flex;
+            display: none;
             justify-content: space-between;
-            z-index: 1003;
             width: 100%;
+            z-index: 1003;
         }
 
         .prev-btn,
@@ -233,7 +225,7 @@
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Hide arrows when exiting fullscreen
+                fullscreenNavigation.style.display = 'none';
             });
         });
 
@@ -241,7 +233,7 @@
             image.addEventListener('click', () => {
                 fullscreenImg.src = image.src;
                 fullscreen.style.display = 'flex';
-                fullscreenNavigation.style.display = 'flex';  // Show arrows in fullscreen mode
+                fullscreenNavigation.style.display = 'flex';
                 currentIndex = index;
             });
         });
@@ -259,7 +251,7 @@
         fullscreen.addEventListener('click', (event) => {
             if (event.target === fullscreen) {
                 fullscreen.style.display = 'none';
-                fullscreenNavigation.style.display = 'none';  // Hide arrows when exiting fullscreen
+                fullscreenNavigation.style.display = 'none';
             }
         });
     </script>
