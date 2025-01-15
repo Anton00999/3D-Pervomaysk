@@ -252,6 +252,13 @@
             currentIndex = (currentIndex + 1) % images.length;
             fullscreenImg.src = images[currentIndex].src;
         });
+
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
