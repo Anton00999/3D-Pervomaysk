@@ -63,19 +63,15 @@
         }
 
         .gallery-preview img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 5px;
-            transition: transform 0.3s;
+            height: 60px;
+            width: auto;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
         }
 
         .gallery-preview img:nth-child(1) {
-            transform: rotate(10deg);
-        }
-
-        .gallery-preview img:hover:nth-child(1) {
-            transform: rotate(5deg);
+            transform: rotate(0deg);
         }
 
         .gallery-preview img:nth-child(2) {
@@ -183,12 +179,12 @@
     </style>
 </head>
 <body>
-    <h1>Церква Святого Миколая</h1>
+    <h1>Церква Святого Миколая/h1>
     <model-viewer src="church.glb" alt="3D Model" auto-rotate camera-controls></model-viewer>
     <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
-        <img src="church1.jpg" alt="Фото 1" class="rotating-img">
+        <img src="church1.jpg" alt="Фото 1">
         <img src="church2.jpg" alt="Фото 2">
         <img src="church3.jpg" alt="Фото 3">
     </div>
