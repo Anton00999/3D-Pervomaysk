@@ -217,11 +217,17 @@
         }
 
         @media (max-width: 768px) {
+            .map-container {
+                width: 50px;  /* Зменшуємо ширину карти */
+                height: 50px; /* Зменшуємо висоту карти */
+            }
+
             .map-container.expanded {
-                width: 200px;
-                height: 150px;
+                width: 200px; /* Менший розмір розширеної карти */
+                height: 130px;
             }
         }
+
 
                 /* Мобільний вигляд (до 768px) */
         @media (max-width: 768px) {
