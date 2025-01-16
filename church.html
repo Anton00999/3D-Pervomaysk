@@ -186,8 +186,8 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 300px;
-            height: 200px;
+            width: 100px;
+            height: 100px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(59, 43, 31, 0.3);
@@ -195,6 +195,13 @@
             z-index: 100;
             background-color: #f4e4bc;
             padding: 3px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .map-container.expanded {
+            width: 300px;
+            height: 200px;
         }
 
         .map-container iframe {
@@ -202,10 +209,15 @@
             height: 100%;
             border: none;
             border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .map-container.expanded iframe {
+            pointer-events: auto;
         }
 
         @media (max-width: 768px) {
-            .map-container {
+            .map-container.expanded {
                 width: 200px;
                 height: 150px;
             }
@@ -292,6 +304,13 @@
                 fullscreen.style.display = 'none';
                 fullscreenNavigation.style.display = 'none';
             }
+        });
+    </script>
+    <script>
+        const mapContainer = document.querySelector('.map-container');
+        
+        mapContainer.addEventListener('click', () => {
+            mapContainer.classList.toggle('expanded');
         });
     </script>
     <div class="map-container">
