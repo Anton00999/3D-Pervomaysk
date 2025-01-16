@@ -7,99 +7,136 @@
     <style>
         body {
             margin: 0;
-            background: radial-gradient(circle at center, #d3a87b, #7c5e40);
-            font-family: 'Arial', sans-serif;
-            color: #f9f4ef;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: radial-gradient(circle at center, #d3a87b, #7c5e40);
+            font-family: 'Georgia', serif;
+            color: #f9f4ef;
             overflow: hidden;
         }
 
-        h1 {
-            font-size: 4rem;
-            margin: 0 0 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #f9f4ef;
+        .container {
             text-align: center;
-            position: relative;
+            max-width: 700px;
+            padding: 20px;
         }
 
-        h1::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 5px;
-            background: #f4c986;
-            margin: 10px auto 0;
-            border-radius: 2px;
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #f9f4ef;
+            text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
         }
 
         p {
             font-size: 1.2rem;
             margin-bottom: 40px;
-            text-align: center;
-            max-width: 600px;
             line-height: 1.6;
+            color: #dcd4b4;
+            animation: fadeIn 2s ease-in-out;
         }
 
         .links {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .link {
-            position: relative;
-            padding: 20px 40px;
-            font-size: 1.2rem;
-            color: #f9f4ef;
+        a {
+            font-size: 1.3rem;
             text-decoration: none;
-            background: linear-gradient(145deg, #7c5e40, #5c432e);
-            border-radius: 10px;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, background 0.3s;
+            color: #fff;
+            background: linear-gradient(45deg, #6f4b31, #8c6744);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
         }
 
-        .link:hover {
-            background: linear-gradient(145deg, #5c432e, #7c5e40);
-            transform: translateY(-5px);
+        a:hover {
+            background: linear-gradient(45deg, #8c6744, #6f4b31);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .link::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            width: 15px;
-            height: 15px;
-            background: #f4c986;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 223, 128, 0.7);
-            animation: glow 1.5s infinite alternate;
-        }
-
-        .link:hover::before {
-            background: #ffd97d;
-        }
-
-        @keyframes glow {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
-                transform: scale(1.2);
-                opacity: 0.7;
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        footer {
+        .background-animation {
             position: absolute;
-            bottom: 20px;
-            font-size: 0.9rem;
-            color: #f4c986;
-            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .circle:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: 30%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        .circle:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 70%;
+            left: 15%;
+            animation-delay: 3s;
+        }
+
+        .circle:nth-child(5) {
+            width: 180px;
+            height: 180px;
+            top: 20%;
+            left: 85%;
+            animation-delay: 1s;
         }
 
         @media (max-width: 600px) {
@@ -109,22 +146,29 @@
             p {
                 font-size: 1rem;
             }
-            .link {
+            a {
                 font-size: 1rem;
-                padding: 15px 30px;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Відкрий історію</h1>
-    <p>Занурюйтесь у тривимірний світ історичних моделей нашого міста. Кожна сторінка — це нова подорож.</p>
-    <div class="links">
-        <a href="church.html" class="link">Модель церкви</a>
-        <a href="station.html" class="link">Модель вокзалу</a>
-        <a href="cinema.html" class="link">Модель кінотеатру</a>
-        <!-- Додаткові посилання додавайте тут -->
+    <div class="background-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
     </div>
-    <footer>© 2025. Історичні моделі міста.</footer>
+    <div class="container">
+        <h1>Ласкаво просимо!</h1>
+        <p>Перейдіть на одну з нижченаведених сторінок, щоб дослідити тривимірні моделі нашого міста.</p>
+        <div class="links">
+            <a href="church.html">Модель церкви</a>
+            <a href="station.html">Модель вокзалу</a>
+            <a href="cinema.html">Модель кінотеатру</a>
+        </div>
+    </div>
 </body>
 </html>
