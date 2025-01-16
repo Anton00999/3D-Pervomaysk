@@ -236,7 +236,16 @@
                 display: none; /* Ховаємо друге і третє зображення */
             }
         }
-
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;  /* Зменшуємо розмір шрифта */
+                padding: 0 10px;    /* Додаємо відступи по боках */
+                text-align: center; /* Центруємо текст */
+                white-space: nowrap; /* Забороняємо перенос тексту */
+                overflow: hidden;    /* Приховуємо текст, що виходить за межі */
+                text-overflow: ellipsis; /* Додаємо многоточие, якщо текст занадто довгий */
+            }
+        }
     </style>
 </head>
 <body>
