@@ -215,6 +215,33 @@
             pointer-events: auto;
         }
 
+        .gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px;
+            scroll-behavior: smooth;
+            max-width: 100%;
+        }
+
+        .gallery::-webkit-scrollbar {
+            display: none; /* Приховуємо скролбар */
+        }
+        
+        @media (max-width: 768px) {
+            .gallery img {
+                height: 120px; /* Менший розмір для мобільних пристроїв */
+                flex-shrink: 0;
+                border: 2px solid white;
+                cursor: pointer;
+                transition: transform 0.3s;
+            }
+
+            .gallery img:hover {
+                transform: scale(1.1);
+            }
+        }
+
         @media (max-width: 768px) {
             .map-container {
                 width: 50px; 
