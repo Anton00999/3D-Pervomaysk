@@ -221,6 +221,22 @@
                 height: 150px;
             }
         }
+                /* Мобільний вигляд (до 768px) */
+        @media (max-width: 768px) {
+            .gallery-preview {
+                display: block;
+            }
+
+            .gallery-preview img {
+                margin: 0 auto;
+                height: 80px; /* Можна налаштувати висоту, якщо потрібно */
+            }
+
+            .gallery-preview img:nth-child(n+2) {
+                display: none; /* Ховаємо друге і третє зображення */
+            }
+        }
+
     </style>
 </head>
 <body>
