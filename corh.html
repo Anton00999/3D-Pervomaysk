@@ -1,1 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f4e4bc, #e6d5b9);
+            color: #2b1810;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
 
+        model-viewer {
+            width: 80vw;
+            height: 80vh;
+            border: 2px solid #8b6b4a;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(59, 43, 31, 0.4);
+        }
+
+        h1 {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #46332b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(45deg, #8b6b4a, #6b4c2d);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #6b4c2d, #8b6b4a);
+        }
+
+        .gallery-preview {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .gallery-preview img {
+            height: 60px;
+            width: auto;
+            border: 2px solid #8b6b4a; 
+            box-shadow: 0 2px 6px rgba(59, 43, 31, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-preview img:nth-child(1) {
+            transform: rotate(8deg);
+        }
+
+        .gallery-preview img:nth-child(2) {
+            transform: rotate(-10deg);
+        }
+
+        .gallery-preview img:nth-child(3) {
+            transform: rotate(10deg);
+        }
+
+        .gallery-preview:hover img:nth-child(1) {
+            transform: rotate(3deg);
+        }
+
+        .gallery-preview:hover img:nth-child(2) {
+            transform: rotate(-5deg);
+        }
+
+        .gallery-preview:hover img:nth-child(3) {
+            transform: rotate(5deg);
+        }
+
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .gallery img {
+            height: 150px;
+            object-fit: contain;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .fullscreen-navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            justify-content: space-between;
+            width: 100%;
+            z-index: 1003;
+        }
+
+        .prev-btn,
+        .next-btn {
+            font-size: 3rem;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 0 20px;
+            transition: color 0.3s;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            color: #d7a65c;
+        }
+        .map-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(59, 43, 31, 0.3);
+            border: 2px solid #8b6b4a;
+            z-index: 100;
+            background-color: #f4e4bc;
+            padding: 3px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .map-container.expanded {
+            width: 430px;
+            height: 300px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .map-container.expanded iframe {
+            pointer-events: auto;
+        }
+
+        .gallery {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding: 10px 0;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch; /* Для плавного скролінгу на мобільних */
+            }
+
+            .gallery img {
+                height: 150px;
+                object-fit: contain;
+                border: 2px solid white;
+                cursor: pointer;
+                scroll-snap-align: start; /* Прив'язка зображення при скролінгу */
+                transition: transform 0.3s;
+            }
+
+            .gallery img:hover {
+                transform: scale(1.1);
+            }
+
+            @media (max-width: 768px) {
+                .gallery {
+                    gap: 5px;
+                    padding: 5px 0;
+                }
+
+                .gallery img {
+                    height: 100px; /* Зменшуємо розмір фотографій для мобільних */
+                }
+            }
+
+        @media (max-width: 768px) {
+            .map-container {
+                width: 50px; 
+                height: 50px; 
+                top: 5px; 
+                right: 5px; 
+            }
+
+            .map-container.expanded {
+                width: 230px; 
+                height: 170px;
+            }
+        }
+        @media (max-width: 768px) {
+            .gallery-preview {
+                display: block;
+            }
+
+            .gallery-preview img {
+                margin: 0 auto;
+                height: 80px; /* Можна налаштувати висоту, якщо потрібно */
+            }
+
+            .gallery-preview img:nth-child(n+2) {
+                display: none; /* Ховаємо друге і третє зображення */
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;  /* Зменшуємо розмір шрифта */
+                padding: 0 10px;    /* Додаємо відступи по боках */
+                text-align: center; /* Центруємо текст */
+                white-space: nowrap; /* Забороняємо перенос тексту */
+                overflow: hidden;    /* Приховуємо текст, що виходить за межі */
+                text-overflow: ellipsis; /* Додаємо многоточие, якщо текст занадто довгий */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Кутовий Будинок</h1>
+    <model-viewer 
+        src="corh.glb" 
+        alt="3D Model" 
+        auto-rotate 
+        camera-controls 
+        max-camera-orbit="auto 90deg"
+        touch-action="none">
+        </model-viewer>
+    <a href="index.html" class="back-button">Повернутися</a>
+    
+    <div class="gallery-preview">
+        <img src="corh1.jpg" alt="Фото 1">
+        <img src="corh2.jpg" alt="Фото 2">
+        <img src="corh3.jpg" alt="Фото 3">
+    </div>
+
+    <div class="gallery-overlay">
+        <div class="close">&times;</div>
+        <div class="gallery">
+            <img src="corh1.jpg" alt="Фото 1">
+            <img src="corh2.jpg" alt="Фото 2">
+            <img src="corh3.jpg" alt="Фото 3">
+            <img src="corh4.jpg" alt="Фото 4">
+            <img src="corh5.jpg" alt="Фото 5">
+            <img src="corh6.jpg" alt="Фото 6">
+        </div>
+    </div>
+
+    <div class="fullscreen">
+        <div class="close">&times;</div>
+        <img src="" alt="Full Image">
+    </div>
+
+    <div class="fullscreen-navigation">
+        <button class="prev-btn">&lt;</button>
+        <button class="next-btn">&gt;</button>
+    </div>
+
+    <script>
+        const galleryPreview = document.querySelector('.gallery-preview');
+        const galleryOverlay = document.querySelector('.gallery-overlay');
+        const closeButtons = document.querySelectorAll('.close');
+        const images = document.querySelectorAll('.gallery img');
+        const fullscreen = document.querySelector('.fullscreen');
+        const fullscreenImg = fullscreen.querySelector('img');
+        const fullscreenNavigation = document.querySelector('.fullscreen-navigation');
+        const prevButton = document.querySelector('.prev-btn');
+        const nextButton = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+
+        galleryPreview.addEventListener('click', () => {
+            galleryOverlay.style.display = 'flex';
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                galleryOverlay.style.display = 'none';
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+            });
+        });
+
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                fullscreenImg.src = image.src;
+                fullscreen.style.display = 'flex';
+                fullscreenNavigation.style.display = 'flex';
+                currentIndex = index;
+            });
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            fullscreenImg.src = images[currentIndex].src;
+        });
+
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+            }
+        });
+            document.addEventListener('DOMContentLoaded', () => {
+            const mapContainer = document.querySelector('.map-container');
+            const body = document.querySelector('body');
+            
+            // Обробник події для натискання на карту
+            if (mapContainer) {
+                mapContainer.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Запобігає пропагуванню події на body
+                    mapContainer.classList.toggle('expanded');
+                });
+            }
+            
+            // Обробник події для натискання поза картою
+            body.addEventListener('click', () => {
+                if (mapContainer.classList.contains('expanded')) {
+                    mapContainer.classList.remove('expanded');
+                }
+            });
+        });
+    </script>
+     <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d829.4333382539951!2d30.850732620522564!3d48.04142711565073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDjCsDAyJzI5LjEiTiAzMMKwNTEnMDQuMyJF!5e1!3m2!1suk!2sua!4v1737044118279!5m2!1suk!2sua"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</body>
+</html>
