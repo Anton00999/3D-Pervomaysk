@@ -181,6 +181,36 @@
         .next-btn:hover {
             color: #d7a65c;
         }
+
+        .map-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(59, 43, 31, 0.3);
+            border: 2px solid #8b6b4a;
+            z-index: 100;
+            background-color: #f4e4bc;
+            padding: 3px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .map-container {
+                width: 200px;
+                height: 150px;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -264,5 +294,13 @@
             }
         });
     </script>
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d611.5015917845755!2d30.849647092585688!3d48.04483027640621!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sua!4v1737032869497!5m2!1sru!2sua"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
 </body>
 </html>
