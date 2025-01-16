@@ -305,10 +305,17 @@
                 fullscreenNavigation.style.display = 'none';
             }
         });
-        const mapContainer = document.querySelector('.map-container');
         
-        mapContainer.addEventListener('click', () => {
-            mapContainer.classList.toggle('expanded');
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapContainer = document.querySelector('.map-container');
+            console.log('Map container:', mapContainer); // Для дебагу
+            
+            if (mapContainer) {
+                mapContainer.addEventListener('click', () => {
+                    console.log('Map clicked!'); // Для дебагу
+                    mapContainer.classList.toggle('expanded');
+                });
+            }
         });
     </script>
     <div class="map-container">
