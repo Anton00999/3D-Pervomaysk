@@ -306,17 +306,26 @@
             }
         });
         
-        document.addEventListener('DOMContentLoaded', () => {
+                document.addEventListener('DOMContentLoaded', () => {
             const mapContainer = document.querySelector('.map-container');
-            console.log('Map container:', mapContainer); // Для дебагу
+            const body = document.querySelector('body');
             
+            // Обробник події для натискання на карту
             if (mapContainer) {
-                mapContainer.addEventListener('click', () => {
-                    console.log('Map clicked!'); // Для дебагу
+                mapContainer.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Запобігає пропагуванню події на body
                     mapContainer.classList.toggle('expanded');
                 });
             }
+            
+            // Обробник події для натискання поза картою
+            body.addEventListener('click', () => {
+                if (mapContainer.classList.contains('expanded')) {
+                    mapContainer.classList.remove('expanded');
+                }
+            });
         });
+
     </script>
     <div class="map-container">
         <iframe 
