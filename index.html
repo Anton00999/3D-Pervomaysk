@@ -11,70 +11,143 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
-            color: white;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             font-family: 'Arial', sans-serif;
-            text-align: center;
+            color: #fff;
+            overflow: hidden;
         }
 
         .container {
             text-align: center;
+            max-width: 600px;
             padding: 20px;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1.5s ease-in-out;
         }
 
         p {
             font-size: 1.2rem;
             margin-bottom: 40px;
+            line-height: 1.6;
+            animation: fadeIn 2s ease-in-out;
         }
 
         .links {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         a {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             text-decoration: none;
             color: #fff;
-            background: #4CAF50;
-            padding: 15px 30px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            background: linear-gradient(45deg, #ff6a00, #ee0979);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
         }
 
         a:hover {
-            background: #45a049;
+            background: linear-gradient(45deg, #ee0979, #ff6a00);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+
+        .circle:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: 30%;
+            left: 40%;
+            animation-delay: 4s;
         }
 
         @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
-            .links a {
-                font-size: 1.2rem;
-                padding: 12px 25px;
+            p {
+                font-size: 1rem;
+            }
+            a {
+                font-size: 1rem;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="background-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
     <div class="container">
-        <h1>Ласкаво просимо на головну сторінку</h1>
-        <p>Перейдіть на одну з нижченаведених сторінок для перегляду моделей:</p>
+        <h1>Ласкаво просимо!</h1>
+        <p>Перейдіть на одну з нижченаведених сторінок, щоб дослідити тривимірні моделі нашого міста.</p>
         <div class="links">
-            <a href="church.html">Переглянути модель церкви</a>
-            <a href="station.html">Переглянути модель вокзалу</a>
-            <a href="cinema.html">Переглянути модель кінотеатру</a>
+            <a href="church.html">Модель церкви</a>
+            <a href="station.html">Модель вокзалу</a>
+            <a href="cinema.html">Модель кінотеатру</a>
         </div>
     </div>
 </body>
