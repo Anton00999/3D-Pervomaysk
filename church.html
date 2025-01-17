@@ -575,16 +575,17 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
+            if (!isDragging) return;
 
-                const containerRect = comparisonContainer.getBoundingClientRect();
-                const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+            const containerRect = comparisonContainer.getBoundingClientRect();
+            const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-                if (percentage >= 10 && percentage <= 90) {
-                    divider.style.left = `${percentage}%`;
-        }
-
-            });
+            if (percentage >= 10 && percentage <= 90) {
+                modelSide.style.width = `${percentage}%`;
+                photoSide.style.width = `${100 - percentage}%`;
+                divider.style.left = `${percentage}%`;
+            }
+        });
 
         document.addEventListener('mouseup', () => {
             isDragging = false;
