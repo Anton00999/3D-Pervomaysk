@@ -246,6 +246,105 @@
             pointer-events: auto;
         }
 
+        .compare-btn {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                padding: 8px 15px;
+                background: linear-gradient(45deg, #8b6b4a, #6b4c2d);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: none;
+                z-index: 1005;
+                font-family: Arial, sans-serif;
+            }
+
+            .compare-btn:hover {
+                background: linear-gradient(45deg, #6b4c2d, #8b6b4a);
+            }
+
+            .comparison-mode {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+                z-index: 1006;
+            }
+
+            .comparison-container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                overflow: hidden;
+            }
+
+            .model-side, .photo-side {
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .model-side {
+                left: 0;
+            }
+
+            .photo-side {
+                right: 0;
+            }
+
+            .divider {
+                position: absolute;
+                width: 4px;
+                height: 100%;
+                background: #8b6b4a;
+                left: 50%;
+                transform: translateX(-50%);
+                cursor: ew-resize;
+                z-index: 1007;
+            }
+
+            .divider::after {
+                content: '';
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                background: #8b6b4a;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .divider::before {
+                content: '↔';
+                position: absolute;
+                color: white;
+                font-size: 20px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+            }
+
+            .exit-comparison {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                padding: 8px 15px;
+                background: rgba(139, 107, 74, 0.8);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1008;
+            }
+
         @media (max-width: 768px) {
             .map-container {
                 width: 50px; 
@@ -327,6 +426,21 @@
         <button class="next-btn">&gt;</button>
     </div>
 
+    <button class="compare-btn">Порівняти з моделлю</button>
+
+    <div class="comparison-mode">
+        <div class="comparison-container">
+            <div class="model-side">
+                <model-viewer src="church.glb" alt="3D Model" camera-controls></model-viewer>
+            </div>
+            <div class="photo-side">
+                <img src="" alt="Photo for comparison" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="divider"></div>
+        </div>
+        <button class="exit-comparison">✕ Вийти з режиму порівняння</button>
+    </div>
+
     <script>
         const galleryPreview = document.querySelector('.gallery-preview');
         const galleryOverlay = document.querySelector('.gallery-overlay');
@@ -386,6 +500,92 @@
                 fullscreenButton.classList.remove('exit');
             }
         }
+
+        const photoConfigs = {
+            'church1.jpg': {
+                cameraOrbit: '0deg 75deg 2m',
+                cameraTarget: '0m 1m 0m',
+                fieldOfView: '45deg'
+            },
+            'church2.jpg': {
+                cameraOrbit: '90deg 60deg 2.5m',
+                cameraTarget: '0m 1m 0m',
+                fieldOfView: '40deg'
+            },
+            'church3.jpg': {
+                cameraOrbit: '180deg 65deg 2.2m',
+                cameraTarget: '0m 1m 0m',
+                fieldOfView: '42deg'
+            }
+        };
+
+        const compareBtn = document.querySelector('.compare-btn');
+        const comparisonMode = document.querySelector('.comparison-mode');
+        const divider = document.querySelector('.divider');
+        const comparisonContainer = document.querySelector('.comparison-container');
+        const modelSide = document.querySelector('.model-side');
+        const photoSide = document.querySelector('.photo-side');
+        const exitButton = document.querySelector('.exit-comparison');
+        const comparisonModelViewer = document.querySelector('.model-side model-viewer');
+        const photoSideImg = document.querySelector('.photo-side img');
+
+        // Показуємо кнопку порівняння тільки в режимі повноекранного перегляду фото
+        fullscreen.addEventListener('show', () => {
+            compareBtn.style.display = 'block';
+        });
+
+        fullscreen.addEventListener('hide', () => {
+            compareBtn.style.display = 'none';
+        });
+
+        // Обробка перетягування роздільника
+        let isDragging = false;
+
+        divider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const containerRect = comparisonContainer.getBoundingClientRect();
+            const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+                
+            if (percentage >= 10 && percentage <= 90) {
+                modelSide.style.width = `${percentage}%`;
+                photoSide.style.width = `${100 - percentage}%`;
+                divider.style.left = `${percentage}%`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Функція для активації режиму порівняння
+        compareBtn.addEventListener('click', () => {
+            const currentPhoto = fullscreenImg.src.split('/').pop();
+            const config = photoConfigs[currentPhoto];
+
+            if (config) {
+                comparisonModelViewer.setAttribute('camera-orbit', config.cameraOrbit);
+                comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
+                comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
+            }
+
+            photoSideImg.src = fullscreenImg.src;
+            fullscreen.style.display = 'none';
+            comparisonMode.style.display = 'block';
+        });
+
+        // Вихід з режиму порівняння
+         exitButton.addEventListener('click', () => {
+            comparisonMode.style.display = 'none';
+            modelSide.style.width = '50%';
+            photoSide.style.width = '50%';
+            divider.style.left = '50%';
+        });
 
         
         closeButtons.forEach(button => {
