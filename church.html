@@ -25,6 +25,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(59, 43, 31, 0.4);
         }
+        
+        <button id="fullscreen-button">Go Fullscreen</button>
 
         h1 {
             position: absolute;
@@ -268,6 +270,7 @@
         touch-action="none">
         </model-viewer>
     <a href="index.html" class="back-button">Повернутися</a>
+    <button id="fullscreen-button">Go Fullscreen</button>
     
     <div class="gallery-preview">
         <img src="church1.jpg" alt="Фото 1">
@@ -364,6 +367,18 @@
                 }
             });
         });
+            const modelViewer = document.getElementById('model');
+            const fullscreenButton = document.getElementById('fullscreen-button');
+
+            fullscreenButton.addEventListener('click', () => {
+                if (modelViewer.requestFullscreen) {
+                    modelViewer.requestFullscreen();
+                } else if (modelViewer.webkitRequestFullscreen) {
+                    modelViewer.webkitRequestFullscreen(); // Safari
+                } else if (modelViewer.msRequestFullscreen) {
+                    modelViewer.msRequestFullscreen(); // IE/Edge
+                }
+            });
 
     </script>
     <div class="map-container">
