@@ -722,19 +722,22 @@
         // Отримуємо елемент <model-viewer>
         const modelViewer = document.querySelector('model-viewer');
 
-        // Функція для оновлення камери
-        function resetCameraSettings() {
-            modelViewer.cameraOrbit = '0deg 75deg 2m';  // Встановіть потрібну позицію камери
-            modelViewer.cameraTarget = '0m 0m 0m';     // Встановіть потрібний фокус
-            modelViewer.fieldOfView = '45deg';         // При необхідності змініть поле огляду
-
-            // Перезапуск рендера (опційно, якщо параметри не застосовуються)
-            modelViewer.updateFraming(); 
+        // Функція для оновлення моделі
+        function resetModelAndCamera() {
+            const src = modelViewer.src; // Зберігаємо поточне джерело моделі
+            modelViewer.src = '';       // Тимчасово очищуємо джерело моделі
+            setTimeout(() => {
+                modelViewer.src = src; // Повертаємо джерело моделі
+                // Задаємо потрібні параметри камери
+                modelViewer.cameraOrbit = '0deg 75deg 2m';  
+                modelViewer.cameraTarget = '0m 0m 0m';
+                modelViewer.fieldOfView = '45deg';
+            }, 50); // Затримка для перезавантаження
         }
 
-        // Викликати функцію щоразу при вході в режим порівняння
+        // Викликати функцію при вході в режим порівняння
         document.getElementById('comparison-mode').addEventListener('click', () => {
-            resetCameraSettings();
+            resetModelAndCamera();
         });
     </script>
     <div class="map-container">
