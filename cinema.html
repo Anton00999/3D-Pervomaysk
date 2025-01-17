@@ -510,20 +510,44 @@
         }
 
         const photoConfigs = {
-            'cinema1.jpg': {
-                cameraOrbit: '90deg 90deg 1m',
-                cameraTarget: '0m 0m 0m',
-                fieldOfView: '50deg'
+            'church1.jpg': {
+                cameraOrbit: {
+                    theta: 45,    // горизонтальний кут в градусах (0-360)
+                    phi: 60,      // вертикальний кут в градусах (0-180)
+                    radius: 3     // відстань до об'єкта в метрах
+                },
+                cameraTarget: {
+                    x: 0,        // зміщення точки огляду по X
+                    y: 1,        // висота точки огляду
+                    z: 0         // зміщення точки огляду по Z
+                },
+                fieldOfView: 30   // кут огляду в градусах
             },
-            'cinema2.jpg': {
-                cameraOrbit: '90deg 90deg 1m',
-                cameraTarget: '0m 0m 0m',
-                fieldOfView: '50deg'
+            'church2.jpg': {
+                cameraOrbit: {
+                    theta: 180,
+                    phi: 45,
+                    radius: 2.5
+                },
+                cameraTarget: {
+                    x: -0.5,
+                    y: 1.2,
+                    z: 0
+                },
+                fieldOfView: 35
             },
-            'cinema3.jpg': {
-                cameraOrbit: '0deg 0deg 1m',
-                cameraTarget: '0m 0m 0m',
-                fieldOfView: '50deg'
+            'church3.jpg': {
+                cameraOrbit: {
+                    theta: 270,
+                    phi: 55,
+                    radius: 4
+                },
+                cameraTarget: {
+                    x: 0,
+                    y: 1.5,
+                    z: 0.5
+                },
+                fieldOfView: 40
             }
         };
 
