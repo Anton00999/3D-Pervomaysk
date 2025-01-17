@@ -330,15 +330,17 @@
             galleryOverlay.style.display = 'flex';
         });
 
-        const fullscreenButton = document.getElementById('fullscreen-button');
-        const modelViewer = document.getElementById('model-viewer');
+        const modelViewer = document.querySelector('#model-viewer');
+        const fullscreenButton = document.querySelector('#fullscreen-button');
 
         fullscreenButton.addEventListener('click', () => {
             if (modelViewer.requestFullscreen) {
                 modelViewer.requestFullscreen();
-            } else if (modelViewer.webkitRequestFullscreen) { // For Safari
+            } else if (modelViewer.webkitRequestFullscreen) {
+                // Для Safari
                 modelViewer.webkitRequestFullscreen();
-            } else if (modelViewer.msRequestFullscreen) { // For IE11
+            } else if (modelViewer.msRequestFullscreen) {
+                // Для Internet Explorer
                 modelViewer.msRequestFullscreen();
             }
         });
