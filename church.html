@@ -343,18 +343,31 @@
         const fullscreenButton = document.querySelector('#fullscreen-button');
 
         fullscreenButton.addEventListener('click', () => {
-            if (viewerContainer.requestFullscreen) {
-                viewerContainer.requestFullscreen();
-            } else if (viewerContainer.webkitRequestFullscreen) {
-                // Для Safari
-                viewerContainer.webkitRequestFullscreen();
-            } else if (viewerContainer.msRequestFullscreen) {
-                // Для Internet Explorer
-                viewerContainer.msRequestFullscreen();
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.msFullscreenElement) {
+                // Входимо в повноекранний режим
+                if (viewerContainer.requestFullscreen) {
+                    viewerContainer.requestFullscreen();
+                } else if (viewerContainer.webkitRequestFullscreen) {
+                    viewerContainer.webkitRequestFullscreen();
+                } else if (viewerContainer.msRequestFullscreen) {
+                    viewerContainer.msRequestFullscreen();
+                } else {
+                    alert('Fullscreen API не підтримується вашим браузером.');
+                }
             } else {
-                alert('Fullscreen API не підтримується вашим браузером.');
+                // Виходимо з повноекранного режиму
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
             }
         });
+
         
         closeButtons.forEach(button => {
             button.addEventListener('click', () => {
