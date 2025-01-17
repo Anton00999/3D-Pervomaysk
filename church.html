@@ -36,6 +36,21 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
+        .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .fullscreen-button img {
+            width: 32px;
+            height: 32px;
+        }
+
         .back-button {
             position: fixed;
             bottom: 10px;
@@ -268,6 +283,10 @@
         touch-action="none">
         </model-viewer>
     <a href="index.html" class="back-button">Повернутися</a>
+
+    <button class="fullscreen-button" id="fullscreen-button">
+        <img src="https://img.icons8.com/ios-glyphs/30/full-screen.png" alt="Fullscreen Icon">
+    </button>
     
     <div class="gallery-preview">
         <img src="church1.jpg" alt="Фото 1">
@@ -309,6 +328,19 @@
 
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
+        });
+
+        const fullscreenButton = document.getElementById('fullscreen-button');
+        const modelViewer = document.getElementById('model-viewer');
+
+        fullscreenButton.addEventListener('click', () => {
+            if (modelViewer.requestFullscreen) {
+                modelViewer.requestFullscreen();
+            } else if (modelViewer.webkitRequestFullscreen) { // For Safari
+                modelViewer.webkitRequestFullscreen();
+            } else if (modelViewer.msRequestFullscreen) { // For IE11
+                modelViewer.msRequestFullscreen();
+            }
         });
 
         closeButtons.forEach(button => {
