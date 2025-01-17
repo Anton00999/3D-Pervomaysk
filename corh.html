@@ -18,12 +18,19 @@
             position: relative;
         }
 
-        model-viewer {
+        #viewer-container {
+            position: relative;
             width: 80vw;
             height: 80vh;
             border: 2px solid #8b6b4a;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(59, 43, 31, 0.4);
+            background: linear-gradient(135deg, #f4e4bc, #e6d5b9); /* Фон такий самий, як у body */
+        }
+            
+        model-viewer {
+            width: 100%;
+            height: 100%;
         }
 
         h1 {
@@ -34,6 +41,29 @@
             font-size: 2rem;
             color: #46332b;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: url('https://img.icons8.com/ios-glyphs/30/full-screen.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .fullscreen-button img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .fullscreen-button.exit {
+            background: url('https://static-00.iconduck.com/assets.00/fullscreen-exit-icon-512x512-k6kwh7ao.png') no-repeat center center;
+            background-size: contain;
         }
 
         .back-button {
@@ -289,14 +319,17 @@
 </head>
 <body>
     <h1>Кутовий Будинок</h1>
-    <model-viewer 
-        src="corh.glb" 
-        alt="3D Model" 
-        auto-rotate 
-        camera-controls 
-        max-camera-orbit="auto 90deg"
-        touch-action="none">
+    <div id="viewer-container">
+        <model-viewer 
+            id="model-viewer"
+            src="corh.glb" 
+            alt="3D Model" 
+            auto-rotate 
+            camera-controls
+            max-camera-orbit="auto 90deg">
         </model-viewer>
+        <button class="fullscreen-button" id="fullscreen-button"></button>
+    </div>
     <a href="index.html" class="back-button">Повернутися</a>
     
     <div class="gallery-preview">
@@ -343,6 +376,49 @@
         galleryPreview.addEventListener('click', () => {
             galleryOverlay.style.display = 'flex';
         });
+
+        const viewerContainer = document.querySelector('#viewer-container');
+        const fullscreenButton = document.querySelector('#fullscreen-button');
+
+        fullscreenButton.addEventListener('click', () => {
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.msFullscreenElement) {
+                // Входимо в повноекранний режим
+                if (viewerContainer.requestFullscreen) {
+                    viewerContainer.requestFullscreen();
+                } else if (viewerContainer.webkitRequestFullscreen) {
+                    viewerContainer.webkitRequestFullscreen();
+                } else if (viewerContainer.msRequestFullscreen) {
+                    viewerContainer.msRequestFullscreen();
+                } else {
+                    alert('Fullscreen API не підтримується вашим браузером.');
+                }
+            } else {
+                // Виходимо з повноекранного режиму
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        });
+
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+        document.addEventListener('msfullscreenchange', updateFullscreenButton);
+
+        function updateFullscreenButton() {
+            if (document.fullscreenElement || 
+                document.webkitFullscreenElement || 
+                document.msFullscreenElement) {
+                fullscreenButton.classList.add('exit');
+            } else {
+                fullscreenButton.classList.remove('exit');
+            }
+        }
 
         closeButtons.forEach(button => {
             button.addEventListener('click', () => {
