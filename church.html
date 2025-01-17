@@ -593,23 +593,32 @@
 
         // Функція для активації режиму порівняння
         compareBtn.addEventListener('click', () => {
-            const currentPhoto = fullscreenImg.src.split('/').pop();
-            const config = photoConfigs[currentPhoto];
+                
+                const currentPhoto = fullscreenImg.src.split('/').pop();
+                const config = photoConfigs[currentPhoto];
 
-            if (config) {
-                comparisonModelViewer.setAttribute('camera-orbit', config.cameraOrbit);
-                comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
-                comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
-            }
+                if (config) {
+                    comparisonModelViewer.setAttribute('camera-orbit', config.cameraOrbit);
+                    comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
+                    comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
+                }
 
-            // Очистити попереднє обрізання
-            photoSide.style.clipPath = 'none';
+                // Очистити попереднє обрізання
+                photoSide.style.clipPath = 'none';
 
-            photoSideImg.src = fullscreenImg.src;
-            fullscreen.style.display = 'none';
-            fullscreenNavigation.style.display = 'none';
-            comparisonMode.style.display = 'block';
-        });
+                // Завантажити нове зображення
+                photoSideImg.src = fullscreenImg.src;
+
+                // Переконатись, що нове зображення завантажилось, перед застосуванням обрізання
+                photoSideImg.onload = () => {
+                    // Застосовуємо обрізання після завантаження фотографії
+                    photoSide.style.clipPath = `inset(0 0 0 ${sliderPosition}px)`;
+                };
+
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+                comparisonMode.style.display = 'block';
+            });
 
         // Вихід з режиму порівняння
         exitButton.addEventListener('click', () => {
