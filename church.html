@@ -273,6 +273,7 @@
                 height: 100%;
                 display: none;
                 z-index: 1006;
+                background: white;
             }
 
             .comparison-container {
@@ -529,13 +530,34 @@
         const comparisonModelViewer = document.querySelector('.model-side model-viewer');
         const photoSideImg = document.querySelector('.photo-side img');
 
-        // Показуємо кнопку порівняння тільки в режимі повноекранного перегляду фото
-        fullscreen.addEventListener('show', () => {
-            compareBtn.style.display = 'block';
+        // Модифікуємо існуючий обробник кліку по зображенню в галереї
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                fullscreenImg.src = image.src;
+                fullscreen.style.display = 'flex';
+                fullscreenNavigation.style.display = 'flex';
+                compareBtn.style.display = 'block'; // Показуємо кнопку порівняння
+                currentIndex = index;
+            });
         });
 
-        fullscreen.addEventListener('hide', () => {
-            compareBtn.style.display = 'none';
+        // Модифікуємо існуючий обробник закриття повноекранного режиму
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                galleryOverlay.style.display = 'none';
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+                compareBtn.style.display = 'none'; // Ховаємо кнопку порівняння
+            });
+        });
+
+        // Додаємо обробник кліку поза зображенням
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+                compareBtn.style.display = 'none'; // Ховаємо кнопку порівняння
+            }
         });
 
         // Обробка перетягування роздільника
@@ -576,11 +598,12 @@
 
             photoSideImg.src = fullscreenImg.src;
             fullscreen.style.display = 'none';
+            fullscreenNavigation.style.display = 'none';
             comparisonMode.style.display = 'block';
         });
 
         // Вихід з режиму порівняння
-         exitButton.addEventListener('click', () => {
+        exitButton.addEventListener('click', () => {
             comparisonMode.style.display = 'none';
             modelSide.style.width = '50%';
             photoSide.style.width = '50%';
