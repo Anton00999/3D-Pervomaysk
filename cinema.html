@@ -718,6 +718,24 @@
                 }
             });
         });
+
+        // Отримуємо елемент <model-viewer>
+        const modelViewer = document.querySelector('model-viewer');
+
+        // Функція для оновлення камери
+        function resetCameraSettings() {
+            modelViewer.cameraOrbit = '0deg 75deg 2m';  // Встановіть потрібну позицію камери
+            modelViewer.cameraTarget = '0m 0m 0m';     // Встановіть потрібний фокус
+            modelViewer.fieldOfView = '45deg';         // При необхідності змініть поле огляду
+
+            // Перезапуск рендера (опційно, якщо параметри не застосовуються)
+            modelViewer.updateFraming(); 
+        }
+
+        // Викликати функцію щоразу при вході в режим порівняння
+        document.getElementById('comparison-mode').addEventListener('click', () => {
+            resetCameraSettings();
+        });
     </script>
     <div class="map-container">
         <iframe 
