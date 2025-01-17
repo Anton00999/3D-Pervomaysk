@@ -573,9 +573,10 @@
 
             const containerRect = comparisonContainer.getBoundingClientRect();
             const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-
-            // Переміщуємо лише роздільник
+                
             if (percentage >= 10 && percentage <= 90) {
+                modelSide.style.width = `${percentage}%`;
+                photoSide.style.width = `${100 - percentage}%`;
                 divider.style.left = `${percentage}%`;
             }
         });
