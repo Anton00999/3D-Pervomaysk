@@ -285,20 +285,24 @@
             }
 
             .model-side, .photo-side {
-                overflow: hidden;
-                width: 100%;
-                height: 100%;
                 position: absolute;
                 top: 0;
-                left: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
             }
 
             .model-side {
-                left: 0;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .photo-side {
-                right: 0;
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
             }
 
             .divider {
@@ -576,10 +580,10 @@
                 const containerRect = comparisonContainer.getBoundingClientRect();
                 const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-                // Оновлюємо лише позицію divider, не змінюючи ширину фото і моделі
                 if (percentage >= 10 && percentage <= 90) {
                     divider.style.left = `${percentage}%`;
-                }
+        }
+
             });
 
         document.addEventListener('mouseup', () => {
