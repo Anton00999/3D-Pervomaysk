@@ -285,10 +285,13 @@
             }
 
             .model-side, .photo-side {
-                position: absolute;
-                width: 50%;
-                height: 100%;
                 overflow: hidden;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: none;
             }
 
             .model-side {
@@ -569,17 +572,16 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+                if (!isDragging) return;
 
-            const containerRect = comparisonContainer.getBoundingClientRect();
-            const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-                
-            if (percentage >= 10 && percentage <= 90) {
-                modelSide.style.width = `${percentage}%`;
-                photoSide.style.width = `${100 - percentage}%`;
-                divider.style.left = `${percentage}%`;
-            }
-        });
+                const containerRect = comparisonContainer.getBoundingClientRect();
+                const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+                // Оновлюємо лише позицію divider, не змінюючи ширину фото і моделі
+                if (percentage >= 10 && percentage <= 90) {
+                    divider.style.left = `${percentage}%`;
+                }
+            });
 
         document.addEventListener('mouseup', () => {
             isDragging = false;
