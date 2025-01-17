@@ -25,6 +25,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(59, 43, 31, 0.4);
         }
+        <button id="fullscreen-button">Go Fullscreen</button>
 
         h1 {
             position: absolute;
@@ -215,7 +216,25 @@
         .map-container.expanded iframe {
             pointer-events: auto;
         }
-         <button id="fullscreen-button">Go Fullscreen</button>
+
+        #fullscreen-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: #007BFF;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            #fullscreen-button:hover {
+                background-color: #0056b3;
+            }
+
 
         @media (max-width: 768px) {
             .map-container {
