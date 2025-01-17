@@ -601,6 +601,9 @@
                 comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
             }
 
+            // Очистити попереднє обрізання
+            photoSide.style.clipPath = 'none';
+
             photoSideImg.src = fullscreenImg.src;
             fullscreen.style.display = 'none';
             fullscreenNavigation.style.display = 'none';
