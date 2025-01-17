@@ -25,8 +25,6 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(59, 43, 31, 0.4);
         }
-        
-        <button id="fullscreen-button">Go Fullscreen</button>
 
         h1 {
             position: absolute;
@@ -218,23 +216,6 @@
             pointer-events: auto;
         }
 
-        #fullscreen-button {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background: url('https://cdn-icons-png.flaticon.com/512/2089/2089679.png') no-repeat center;
-            background-size: contain;
-            border: none;
-            cursor: pointer;
-            opacity: 0.8;
-        }
-
-        #fullscreen-button:hover {
-            opacity: 1;
-        }
-
         @media (max-width: 768px) {
             .map-container {
                 width: 50px; 
@@ -287,7 +268,6 @@
         touch-action="none">
         </model-viewer>
     <a href="index.html" class="back-button">Повернутися</a>
-    <button id="fullscreen-button">Go Fullscreen</button>
     
     <div class="gallery-preview">
         <img src="church1.jpg" alt="Фото 1">
@@ -383,18 +363,6 @@
                     mapContainer.classList.remove('expanded');
                 }
             });
-        });
-        const modelViewer = document.getElementById('model');
-        const fullscreenButton = document.getElementById('fullscreen-button');
-
-        fullscreenButton.addEventListener('click', () => {
-            if (modelViewer.requestFullscreen) {
-                modelViewer.requestFullscreen();
-            } else if (modelViewer.webkitRequestFullscreen) {
-                modelViewer.webkitRequestFullscreen(); // Safari
-            } else if (modelViewer.msRequestFullscreen) {
-                modelViewer.msRequestFullscreen(); // IE/Edge
-            }
         });
 
     </script>
