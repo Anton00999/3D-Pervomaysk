@@ -629,6 +629,17 @@
                 comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
                 comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
             }
+            setTimeout(() => {
+                if (config) {
+                    comparisonModelViewer.setAttribute('camera-orbit', config.cameraOrbit);
+                    comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
+                    comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
+                }
+            }, 100);
+
+                photoSideImg.src = fullscreenImg.src;
+                fullscreen.style.display = 'none';
+                comparisonMode.style.display = 'block';
 
             // Очистити попереднє обрізання
             photoSide.style.clipPath = 'none';
