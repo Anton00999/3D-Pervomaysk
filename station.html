@@ -211,6 +211,7 @@
         .next-btn:hover {
             color: #d7a65c;
         }
+
         .map-container {
             position: absolute;
             top: 20px;
@@ -245,37 +246,110 @@
             pointer-events: auto;
         }
 
-        .gallery {
-                display: flex;
-                overflow-x: auto;
-                gap: 10px;
-                padding: 10px 0;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch; /* Для плавного скролінгу на мобільних */
-            }
-
-            .gallery img {
-                height: 150px;
-                object-fit: contain;
-                border: 2px solid white;
+        .compare-btn {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                padding: 8px 15px;
+                background: linear-gradient(45deg, #8b6b4a, #6b4c2d);
+                color: white;
+                border: none;
+                border-radius: 5px;
                 cursor: pointer;
-                scroll-snap-align: start; /* Прив'язка зображення при скролінгу */
-                transition: transform 0.3s;
+                display: none;
+                z-index: 1005;
+                font-family: Arial, sans-serif;
             }
 
-            .gallery img:hover {
-                transform: scale(1.1);
+            .compare-btn:hover {
+                background: linear-gradient(45deg, #6b4c2d, #8b6b4a);
             }
 
-            @media (max-width: 768px) {
-                .gallery {
-                    gap: 5px;
-                    padding: 5px 0;
-                }
+            .comparison-mode {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+                z-index: 1006;
+                background: white;
+            }
 
-                .gallery img {
-                    height: 100px; /* Зменшуємо розмір фотографій для мобільних */
-                }
+            .comparison-container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                overflow: hidden;
+            }
+
+            .model-side, .photo-side {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                transform: translateX(-50%);
+            }
+
+            .model-side {
+                width: 100%;
+                height: 100%;
+            }
+
+            .photo-side {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .divider {
+                position: absolute;
+                width: 4px;
+                height: 100%;
+                background: #8b6b4a;
+                left: 50%;
+                transform: translateX(-50%);
+                cursor: ew-resize;
+                z-index: 1007;
+            }
+
+            .divider::after {
+                content: '';
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                background: #8b6b4a;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .divider::before {
+                content: '↔';
+                position: absolute;
+                color: white;
+                font-size: 20px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+            }
+
+            .exit-comparison {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                padding: 8px 15px;
+                background: rgba(139, 107, 74, 0.8);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1008;
             }
 
         @media (max-width: 768px) {
@@ -291,6 +365,7 @@
                 height: 170px;
             }
         }
+
         @media (max-width: 768px) {
             .gallery-preview {
                 display: block;
@@ -305,7 +380,7 @@
                 display: none; /* Ховаємо друге і третє зображення */
             }
         }
-        @media (max-width: 768px) {
+         @media (max-width: 768px) {
             h1 {
                 font-size: 1.2rem;  /* Зменшуємо розмір шрифта */
                 padding: 0 10px;    /* Додаємо відступи по боках */
@@ -315,6 +390,7 @@
                 text-overflow: ellipsis; /* Додаємо многоточие, якщо текст занадто довгий */
             }
         }
+
     </style>
 </head>
 <body>
@@ -366,6 +442,21 @@
     <div class="fullscreen-navigation">
         <button class="prev-btn">&lt;</button>
         <button class="next-btn">&gt;</button>
+    </div>
+
+    <button class="compare-btn">Порівняти з моделлю</button>
+
+    <div class="comparison-mode">
+        <div class="comparison-container">
+            <div class="model-side">
+                <model-viewer src="station.glb" alt="3D Model" camera-controls></model-viewer>
+            </div>
+            <div class="photo-side">
+                <img src="" alt="Photo for comparison" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="divider"></div>
+        </div>
+        <button class="exit-comparison">✕ Вийти з режиму порівняння</button>
     </div>
 
     <script>
@@ -428,7 +519,128 @@
             }
         }
 
+        const photoConfigs = {
+            'station1.jpg': {
+                cameraOrbit: '270deg 90deg 70m',
+                cameraTarget: '0m 0m 0m',
+                fieldOfView: '50deg'
+            },
+            'station2.jpg': {
+                cameraOrbit: '90deg 90deg 2m',
+                cameraTarget: '-20m 0m 0m',
+                fieldOfView: '50deg'
+            },
+            'station3.jpg': {
+                cameraOrbit: '90deg 90deg 1m',
+                cameraTarget: '0m 0m 0m',
+                fieldOfView: '50deg'
+            }
+        };
+        const compareBtn = document.querySelector('.compare-btn');
+        const comparisonMode = document.querySelector('.comparison-mode');
+        const divider = document.querySelector('.divider');
+        const comparisonContainer = document.querySelector('.comparison-container');
+        const modelSide = document.querySelector('.model-side');
+        const photoSide = document.querySelector('.photo-side');
+        const exitButton = document.querySelector('.exit-comparison');
+        const comparisonModelViewer = document.querySelector('.model-side model-viewer');
+        const photoSideImg = document.querySelector('.photo-side img');
 
+        // Модифікуємо існуючий обробник кліку по зображенню в галереї
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                fullscreenImg.src = image.src;
+                fullscreen.style.display = 'flex';
+                fullscreenNavigation.style.display = 'flex';
+                compareBtn.style.display = 'block'; // Показуємо кнопку порівняння
+                currentIndex = index;
+            });
+        });
+
+        // Модифікуємо існуючий обробник закриття повноекранного режиму
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                galleryOverlay.style.display = 'none';
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+                compareBtn.style.display = 'none'; // Ховаємо кнопку порівняння
+            });
+        });
+
+        // Додаємо обробник кліку поза зображенням
+        fullscreen.addEventListener('click', (event) => {
+            if (event.target === fullscreen) {
+                fullscreen.style.display = 'none';
+                fullscreenNavigation.style.display = 'none';
+                compareBtn.style.display = 'none'; // Ховаємо кнопку порівняння
+            }
+        });
+
+        // Обробка перетягування роздільника
+        let isDragging = false;
+
+        divider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const containerRect = comparisonContainer.getBoundingClientRect();
+            const percentage = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+            if (percentage >= 10 && percentage <= 90) {
+                photoSide.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;  // Обрізаємо фотографію з правої частини
+                divider.style.left = `${percentage}%`;  // Переміщаємо слайдер по відсотках
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Функція для активації режиму порівняння
+        compareBtn.addEventListener('click', () => {
+            modelSide.style.width = '100%';
+            photoSide.style.width = '100%';
+            divider.style.left = '50%';
+            
+            const currentPhoto = fullscreenImg.src.split('/').pop();
+            const config = photoConfigs[currentPhoto];
+
+            if (config) {
+                comparisonModelViewer.setAttribute('camera-orbit', config.cameraOrbit);
+                comparisonModelViewer.setAttribute('camera-target', config.cameraTarget);
+                comparisonModelViewer.setAttribute('field-of-view', config.fieldOfView);
+            }
+
+            // Очистити попереднє обрізання
+            photoSide.style.clipPath = 'none';
+
+            // Завантажити нове зображення
+            photoSideImg.src = fullscreenImg.src;
+
+            // Переконатись, що нове зображення завантажилось, перед застосуванням обрізання
+            photoSideImg.onload = () => {
+                // Застосовуємо обрізання після завантаження фотографії
+                photoSide.style.clipPath = `inset(0 0 0 ${sliderPosition}px)`;
+            };
+
+            fullscreen.style.display = 'none';
+            fullscreenNavigation.style.display = 'none';
+            comparisonMode.style.display = 'block';
+        });
+
+        // Вихід з режиму порівняння
+        exitButton.addEventListener('click', () => {
+            comparisonMode.style.display = 'none';
+            modelSide.style.width = '50%';
+            photoSide.style.width = '50%';
+            divider.style.left = '50%';
+        });
+
+        
         closeButtons.forEach(button => {
             button.addEventListener('click', () => {
                 galleryOverlay.style.display = 'none';
@@ -462,7 +674,8 @@
                 fullscreenNavigation.style.display = 'none';
             }
         });
-            document.addEventListener('DOMContentLoaded', () => {
+        
+                document.addEventListener('DOMContentLoaded', () => {
             const mapContainer = document.querySelector('.map-container');
             const body = document.querySelector('body');
             
@@ -481,10 +694,11 @@
                 }
             });
         });
+
     </script>
-     <div class="map-container">
+    <div class="map-container">
         <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d829.4333382539951!2d30.850732620522564!3d48.04142711565073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDjCsDAyJzI5LjEiTiAzMMKwNTEnMDQuMyJF!5e1!3m2!1suk!2sua!4v1737044118279!5m2!1suk!2sua"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1486.9063741702219!2d30.850844980787105!3d48.041512676750045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDjCsDAyJzI5LjEiTiAzMMKwNTEnMDQuNCJF!5e1!3m2!1suk!2sua!4v1737196199779!5m2!1suk!2sua"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
