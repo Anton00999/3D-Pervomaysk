@@ -508,19 +508,19 @@
             }
         }
 
-        const photoConfigs = {
+                const photoConfigs = {
             'church1.jpg': {
                 cameraOrbit: {
                     theta: 45,    // горизонтальний кут в градусах (0-360)
                     phi: 60,      // вертикальний кут в градусах (0-180)
-                    radius: 15     // відстань до об'єкта в метрах
+                    radius: 15    // відстань до об'єкта в метрах
                 },
                 cameraTarget: {
-                    x: 0,        // зміщення точки огляду по X
-                    y: 1,        // висота точки огляду
-                    z: 0         // зміщення точки огляду по Z
+                    x: 0,
+                    y: 1,
+                    z: 0
                 },
-                fieldOfView: 30   // кут огляду в градусах
+                fieldOfView: 30
             },
             'church2.jpg': {
                 cameraOrbit: {
@@ -551,16 +551,13 @@
         };
 
         const modelViewer = document.querySelector('model-viewer');
-        const comparisonMode = document.getElementById('comparison-mode');
-        let isComparisonMode = false;
 
-        // Функція для застосування конфігурації
-        function applyPhotoConfig(photo) {
+        // Функція для оновлення камери
+        function updateCameraConfig(photo) {
             const config = photoConfigs[photo];
             if (config) {
                 const { cameraOrbit, cameraTarget, fieldOfView } = config;
 
-                // Застосування камери
                 modelViewer.cameraOrbit = `${cameraOrbit.theta}deg ${cameraOrbit.phi}deg ${cameraOrbit.radius}m`;
                 modelViewer.cameraTarget = `${cameraTarget.x}m ${cameraTarget.y}m ${cameraTarget.z}m`;
                 modelViewer.fieldOfView = `${fieldOfView}deg`;
@@ -569,25 +566,15 @@
             }
         }
 
-        // Подія для завантаження нової моделі
-        modelViewer.addEventListener('model-visibility', () => {
-            if (isComparisonMode) {
-                const photo = modelViewer.src.split('/').pop(); // Отримуємо назву фото
-                applyPhotoConfig(photo); // Застосовуємо конфігурацію
-            }
-        });
-
-        // Приклад увімкнення режиму порівняння
-        comparisonMode.addEventListener('click', () => {
-            isComparisonMode = true; // Активуємо режим порівняння
-            const currentPhoto = 'church1.jpg'; // Поточне фото (може динамічно змінюватися)
-            modelViewer.src = `models/${currentPhoto}`;
-            applyPhotoConfig(currentPhoto);
+        // Приклад натискання кнопки для переходу в режим порівняння
+        document.getElementById('comparison-button').addEventListener('click', () => {
+            const selectedPhoto = 'church1.jpg'; // Замінити на динамічний вибір фото
+            modelViewer.src = `models/${selectedPhoto}`;
+            updateCameraConfig(selectedPhoto);
         });
 
         // Приклад виходу з режиму порівняння
         document.getElementById('exit-comparison').addEventListener('click', () => {
-            isComparisonMode = false; // Вихід із режиму порівняння
             modelViewer.src = ''; // Очищення моделі
         });
 
