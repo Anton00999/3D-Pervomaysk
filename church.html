@@ -513,14 +513,14 @@
                 cameraOrbit: {
                     theta: 45,    // горизонтальний кут в градусах (0-360)
                     phi: 60,      // вертикальний кут в градусах (0-180)
-                    radius: 15    // відстань до об'єкта в метрах
+                    radius: 15     // відстань до об'єкта в метрах
                 },
                 cameraTarget: {
-                    x: 0,
-                    y: 1,
-                    z: 0
+                    x: 0,        // зміщення точки огляду по X
+                    y: 1,        // висота точки огляду
+                    z: 0         // зміщення точки огляду по Z
                 },
-                fieldOfView: 30
+                fieldOfView: 30   // кут огляду в градусах
             },
             'church2.jpg': {
                 cameraOrbit: {
@@ -550,9 +550,13 @@
             }
         };
 
+
+
         const modelViewer = document.querySelector('model-viewer');
 
-        // Функція для оновлення камери
+
+
+        // Функція для оновлення параметрів камери
         function updateCameraConfig(photo) {
             const config = photoConfigs[photo];
             if (config) {
@@ -561,10 +565,35 @@
                 modelViewer.cameraOrbit = `${cameraOrbit.theta}deg ${cameraOrbit.phi}deg ${cameraOrbit.radius}m`;
                 modelViewer.cameraTarget = `${cameraTarget.x}m ${cameraTarget.y}m ${cameraTarget.z}m`;
                 modelViewer.fieldOfView = `${fieldOfView}deg`;
+
+                console.log(`Камера оновлена для ${photo}`);
             } else {
                 console.error(`Configuration for ${photo} not found.`);
             }
         }
+
+
+
+        // Функція для зміни моделі
+        function loadModel(photo) {
+            if (!photoConfigs[photo]) {
+                console.error(`Configuration for ${photo} not found.`);
+                return;
+            }
+
+
+
+            // Змінюємо джерело моделі
+            modelViewer.src = `models/${photo}`;
+
+
+
+            // Додаємо подію для застосування налаштувань після завантаження моделі
+            modelViewer.addEventListener('load', () => {
+                updateCameraConfig(photo);
+            }, { once: true }); // Подія виконається лише один раз
+        }
+
         const compareBtn = document.querySelector('.compare-btn');
         const comparisonMode = document.querySelector('.comparison-mode');
         const divider = document.querySelector('.divider');
