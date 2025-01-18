@@ -556,44 +556,37 @@
 
 
 
-        // Функція для оновлення параметрів камери
+        // Оновлюємо камеру для кожного фото
         function updateCameraConfig(photo) {
             const config = photoConfigs[photo];
             if (config) {
                 const { cameraOrbit, cameraTarget, fieldOfView } = config;
 
+                // Оновлюємо параметри камери
                 modelViewer.cameraOrbit = `${cameraOrbit.theta}deg ${cameraOrbit.phi}deg ${cameraOrbit.radius}m`;
                 modelViewer.cameraTarget = `${cameraTarget.x}m ${cameraTarget.y}m ${cameraTarget.z}m`;
                 modelViewer.fieldOfView = `${fieldOfView}deg`;
-
-                console.log(`Камера оновлена для ${photo}`);
             } else {
                 console.error(`Configuration for ${photo} not found.`);
             }
         }
 
 
-
-        // Функція для зміни моделі
+        // Функція для завантаження моделі
         function loadModel(photo) {
             if (!photoConfigs[photo]) {
                 console.error(`Configuration for ${photo} not found.`);
                 return;
             }
 
-
-
-            // Змінюємо джерело моделі
+            // Завантажуємо модель для вибраного фото
             modelViewer.src = `models/${photo}`;
 
-
-
-            // Додаємо подію для застосування налаштувань після завантаження моделі
+            // Оновлюємо камеру після завантаження моделі
             modelViewer.addEventListener('load', () => {
                 updateCameraConfig(photo);
-            }, { once: true }); // Подія виконається лише один раз
+            });
         }
-
         const compareBtn = document.querySelector('.compare-btn');
         const comparisonMode = document.querySelector('.comparison-mode');
         const divider = document.querySelector('.divider');
