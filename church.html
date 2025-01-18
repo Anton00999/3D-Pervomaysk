@@ -550,6 +550,36 @@
             }
         };
 
+        const modelViewer = document.querySelector('model-viewer');
+
+        // Функція для застосування конфігурації
+        function applyPhotoConfig(photo) {
+            const config = photoConfigs[photo];
+            if (config) {
+                const { cameraOrbit, cameraTarget, fieldOfView } = config;
+
+                // Застосування камери
+                modelViewer.cameraOrbit = `${cameraOrbit.theta}deg ${cameraOrbit.phi}deg ${cameraOrbit.radius}m`;
+                modelViewer.cameraTarget = `${cameraTarget.x}m ${cameraTarget.y}m ${cameraTarget.z}m`;
+                modelViewer.fieldOfView = `${fieldOfView}deg`;
+            } else {
+                console.error(`Configuration for ${photo} not found.`);
+            }
+        }
+
+        // Подія для завантаження нової моделі
+        modelViewer.addEventListener('model-visibility', () => {
+            const photo = modelViewer.src.split('/').pop(); // Отримуємо назву фото
+            applyPhotoConfig(photo); // Застосовуємо конфігурацію
+        });
+
+        // Приклад запуску
+        document.getElementById('comparison-mode').addEventListener('click', () => {
+            const currentPhoto = 'church1.jpg'; // Поточне фото (може динамічно змінюватися)
+            modelViewer.src = `models/${currentPhoto}`;
+            applyPhotoConfig(currentPhoto);
+        });
+
         const compareBtn = document.querySelector('.compare-btn');
         const comparisonMode = document.querySelector('.comparison-mode');
         const divider = document.querySelector('.divider');
