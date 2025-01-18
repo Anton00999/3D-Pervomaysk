@@ -565,19 +565,6 @@
                 console.error(`Configuration for ${photo} not found.`);
             }
         }
-
-        // Приклад натискання кнопки для переходу в режим порівняння
-        document.getElementById('comparison-button').addEventListener('click', () => {
-            const selectedPhoto = 'church1.jpg'; // Замінити на динамічний вибір фото
-            modelViewer.src = `models/${selectedPhoto}`;
-            updateCameraConfig(selectedPhoto);
-        });
-
-        // Приклад виходу з режиму порівняння
-        document.getElementById('exit-comparison').addEventListener('click', () => {
-            modelViewer.src = ''; // Очищення моделі
-        });
-
         const compareBtn = document.querySelector('.compare-btn');
         const comparisonMode = document.querySelector('.comparison-mode');
         const divider = document.querySelector('.divider');
