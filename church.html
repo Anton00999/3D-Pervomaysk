@@ -508,7 +508,7 @@
             }
         }
 
-        const photoConfigs = {
+                const photoConfigs = {
             'church1.jpg': {
                 cameraOrbit: {
                     theta: 45,    // горизонтальний кут в градусах (0-360)
@@ -579,6 +579,7 @@
             modelViewer.src = `models/${currentPhoto}`;
             applyPhotoConfig(currentPhoto);
         });
+
 
         const compareBtn = document.querySelector('.compare-btn');
         const comparisonMode = document.querySelector('.comparison-mode');
