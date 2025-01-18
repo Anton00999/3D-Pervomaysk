@@ -719,26 +719,6 @@
             });
         });
 
-        // Отримуємо елемент <model-viewer>
-        const modelViewer = document.querySelector('model-viewer');
-
-        // Функція для оновлення моделі
-        function resetModelAndCamera() {
-            const src = modelViewer.src; // Зберігаємо поточне джерело моделі
-            modelViewer.src = '';       // Тимчасово очищуємо джерело моделі
-            setTimeout(() => {
-                modelViewer.src = src; // Повертаємо джерело моделі
-                // Задаємо потрібні параметри камери
-                modelViewer.cameraOrbit = '0deg 75deg 2m';  
-                modelViewer.cameraTarget = '0m 0m 0m';
-                modelViewer.fieldOfView = '45deg';
-            }, 50); // Затримка для перезавантаження
-        }
-
-        // Викликати функцію при вході в режим порівняння
-        document.getElementById('comparison-mode').addEventListener('click', () => {
-            resetModelAndCamera();
-        });
     </script>
     <div class="map-container">
         <iframe 
