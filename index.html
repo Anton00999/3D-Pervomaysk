@@ -154,30 +154,26 @@
 
         model-viewer {
             position: absolute;
+            width: 300px;
+            height: 300px;
             opacity: 0.3;
             filter: blur(5px);
             pointer-events: none;
         }
 
         #station {
-            width: 250px;
-            height: 250px;
-            top: 10%;
+            top: 20%;
             left: 10%;
         }
 
         #house {
-            width: 300px;
-            height: 300px;
-            top: 50%;
-            left: 70%;
+            bottom: 10%;
+            right: 18%;
         }
 
         #h2 {
-            width: 200px;
-            height: 200px;
-            top: 70%;
-            left: 30%;
+            bottom: 70%;
+            right: 10%;
         }
 
         @media (max-width: 600px) {
@@ -218,19 +214,5 @@
             <a href="h1.html">Будинок 1, вулиця Шевченка</a>
         </div>
     </div>
-
-    <script>
-        // Випадковий горизонтальний ракурс для вокзалу
-        const randomCameraOrbitStation = `${Math.random() * 360}deg 50deg 10m`;
-        document.getElementById('station').cameraOrbit = randomCameraOrbitStation;
-
-        // Випадковий горизонтальний ракурс для будинку
-        const randomCameraOrbitHouse = `${Math.random() * 360}deg 50deg 8m`;
-        document.getElementById('house').cameraOrbit = randomCameraOrbitHouse;
-
-        // Випадковий горизонтальний ракурс для h2
-        const randomCameraOrbitH2 = `${Math.random() * 360}deg 50deg 5m`;
-        document.getElementById('h2').cameraOrbit = randomCameraOrbitH2;
-    </script>
 </body>
 </html>
