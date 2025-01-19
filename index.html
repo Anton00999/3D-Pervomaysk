@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -21,6 +22,8 @@
             text-align: center;
             max-width: 700px;
             padding: 20px;
+            z-index: 10;
+            position: relative;
         }
 
         h1 {
@@ -79,7 +82,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 5;
             overflow: hidden;
         }
 
@@ -139,6 +142,35 @@
             animation-delay: 1s;
         }
 
+        .model-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        model-viewer {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            opacity: 0.3;
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        #station {
+            top: 20%;
+            left: 10%;
+        }
+
+        #house {
+            bottom: 10%;
+            right: 15%;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 2.5rem;
@@ -160,8 +192,10 @@
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
+    </div>
+    <div class="model-background">
+        <model-viewer id="station" src="station.glb" camera-controls auto-rotate></model-viewer>
+        <model-viewer id="house" src="house.glb" camera-controls auto-rotate></model-viewer>
     </div>
     <div class="container">
         <h1>Ласкаво просимо!</h1>
