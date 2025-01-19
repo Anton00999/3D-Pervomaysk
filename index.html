@@ -160,7 +160,6 @@
             height: 25%;
             left: 20%;
             top: 30%;
-            animation: rotateStation 10s infinite linear;
         }
 
         #house {
@@ -168,7 +167,6 @@
             height: 20%;
             left: 50%;
             top: 60%;
-            animation: rotateHouse 15s infinite linear;
         }
 
         #h2 {
@@ -176,22 +174,6 @@
             height: 15%;
             top: 5%;
             right: 5%;
-            animation: rotateH2 12s infinite linear;
-        }
-
-        @keyframes rotateStation {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        @keyframes rotateHouse {
-            0% { transform: rotateY(180deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        @keyframes rotateH2 {
-            0% { transform: rotateY(90deg); }
-            100% { transform: rotateY(360deg); }
         }
 
         @media (max-width: 600px) {
@@ -222,19 +204,22 @@
     </div>
 
     <div class="model-background">
-        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none" camera-controls>
+        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none" style="width: 25%; height: 25%; left: 20%; top: 30%; opacity: 0.2;">
             <script>
-                document.getElementById('station').cameraOrbit = `${Math.random() * 360}deg ${Math.random() * 180}deg 10m`;
+                const randomCameraOrbitStation = `${Math.random() * 360}deg ${Math.random() * 180}deg 10m`;
+                document.getElementById('station').cameraOrbit = randomCameraOrbitStation;
             </script>
         </model-viewer>
-        <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none" camera-controls>
+        <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none" style="width: 20%; height: 20%; left: 50%; top: 60%; opacity: 0.2;">
             <script>
-                document.getElementById('house').cameraOrbit = `${Math.random() * 360}deg ${Math.random() * 180}deg 8m`;
+                const randomCameraOrbitHouse = `${Math.random() * 360}deg ${Math.random() * 180}deg 8m`;
+                document.getElementById('house').cameraOrbit = randomCameraOrbitHouse;
             </script>
         </model-viewer>
-        <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none" camera-controls>
+        <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none" style="width: 15%; height: 15%; top: 5%; right: 5%; opacity: 0.2;">
             <script>
-                document.getElementById('h2').cameraOrbit = `${Math.random() * 360}deg ${Math.random() * 180}deg 5m`;
+                const randomCameraOrbitH2 = `${Math.random() * 360}deg ${Math.random() * 180}deg 5m`;
+                document.getElementById('h2').cameraOrbit = randomCameraOrbitH2;
             </script>
         </model-viewer>
     </div>
