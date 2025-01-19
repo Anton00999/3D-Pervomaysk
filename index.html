@@ -162,22 +162,22 @@
         #station {
             width: 250px;
             height: 250px;
-            top: 20%;
+            top: 10%;
             left: 10%;
         }
 
         #house {
             width: 300px;
             height: 300px;
-            bottom: 10%;
-            right: 15%;
+            top: 50%;
+            left: 70%;
         }
 
         #h2 {
             width: 200px;
             height: 200px;
-            top: 30%;
-            left: 50%;
+            top: 70%;
+            left: 30%;
         }
 
         @media (max-width: 600px) {
@@ -204,7 +204,7 @@
     </div>
     <div class="model-background">
         <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none"></model-viewer>
-        <model-viewer id="house" src="house.glb" auto-rotate interaction-prompt="none"></model-viewer>
+        <model-viewer id="h1" src="house.glb" auto-rotate interaction-prompt="none"></model-viewer>
         <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none"></model-viewer>
     </div>
     <div class="container">
@@ -220,16 +220,16 @@
     </div>
 
     <script>
-        // Випадковий ракурс для вокзалу
-        const randomCameraOrbitStation = `${Math.random() * 360}deg ${Math.random() * 180}deg 10m`;
+        // Випадковий горизонтальний ракурс для вокзалу
+        const randomCameraOrbitStation = `${Math.random() * 360}deg 50deg 10m`;
         document.getElementById('station').cameraOrbit = randomCameraOrbitStation;
 
-        // Випадковий ракурс для будинку
-        const randomCameraOrbitHouse = `${Math.random() * 360}deg ${Math.random() * 180}deg 8m`;
+        // Випадковий горизонтальний ракурс для будинку
+        const randomCameraOrbitHouse = `${Math.random() * 360}deg 50deg 8m`;
         document.getElementById('house').cameraOrbit = randomCameraOrbitHouse;
 
-        // Випадковий ракурс для h2
-        const randomCameraOrbitH2 = `${Math.random() * 360}deg ${Math.random() * 180}deg 5m`;
+        // Випадковий горизонтальний ракурс для h2
+        const randomCameraOrbitH2 = `${Math.random() * 360}deg 50deg 5m`;
         document.getElementById('h2').cameraOrbit = randomCameraOrbitH2;
     </script>
 </body>
