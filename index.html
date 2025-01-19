@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -21,6 +22,8 @@
             text-align: center;
             max-width: 700px;
             padding: 20px;
+            z-index: 10;
+            position: relative;
         }
 
         h1 {
@@ -79,7 +82,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 5;
             overflow: hidden;
         }
 
@@ -143,42 +146,50 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: -2;
             width: 100%;
             height: 100%;
+            z-index: 0;
+            overflow: hidden;
         }
 
         model-viewer {
             position: absolute;
-            z-index: -1;
-            opacity: 0.2;
-            transition: transform 0.5s ease-in-out;
+            opacity: 0.3;
+            filter: blur(5px);
+            pointer-events: none;
         }
 
         #station {
-            width: 25%;
-            height: 25%;
-            left: 20%;
-            top: 30%;
+            width: 250px;
+            height: 250px;
+            top: 20%;
+            left: 10%;
         }
 
         #house {
-            width: 20%;
-            height: 20%;
-            left: 50%;
-            top: 60%;
+            width: 300px;
+            height: 300px;
+            bottom: 10%;
+            right: 15%;
         }
 
         #h2 {
-            width: 15%;
-            height: 15%;
-            top: 5%;
-            right: 5%;
+            width: 200px;
+            height: 200px;
+            top: 30%;
+            left: 50%;
         }
 
         @media (max-width: 600px) {
-            #station, #house, #h2 {
-                display: none;
+            h1 {
+                font-size: 2.5rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            a {
+                font-size: 1rem;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -190,6 +201,11 @@
         <div class="circle"></div>
         <div class="circle"></div>
         <div class="circle"></div>
+    </div>
+    <div class="model-background">
+        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none"></model-viewer>
+        <model-viewer id="house" src="house.glb" auto-rotate interaction-prompt="none"></model-viewer>
+        <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none"></model-viewer>
     </div>
     <div class="container">
         <h1>Ласкаво просимо!</h1>
@@ -203,13 +219,18 @@
         </div>
     </div>
 
-    <div class="model-background">
-        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none" style="width: 25%; height: 25%; left: 20%; top: 30%; opacity: 0.2;">
-        </model-viewer>
-        <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none" style="width: 20%; height: 20%; left: 50%; top: 60%; opacity: 0.2;">
-        </model-viewer>
-        <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none" style="width: 15%; height: 15%; top: 5%; right: 5%; opacity: 0.2;">
-        </model-viewer>
-    </div>
+    <script>
+        // Випадковий ракурс для вокзалу
+        const randomCameraOrbitStation = `${Math.random() * 360}deg ${Math.random() * 180}deg 10m`;
+        document.getElementById('station').cameraOrbit = randomCameraOrbitStation;
+
+        // Випадковий ракурс для будинку
+        const randomCameraOrbitHouse = `${Math.random() * 360}deg ${Math.random() * 180}deg 8m`;
+        document.getElementById('house').cameraOrbit = randomCameraOrbitHouse;
+
+        // Випадковий ракурс для h2
+        const randomCameraOrbitH2 = `${Math.random() * 360}deg ${Math.random() * 180}deg 5m`;
+        document.getElementById('h2').cameraOrbit = randomCameraOrbitH2;
+    </script>
 </body>
 </html>
