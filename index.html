@@ -205,25 +205,10 @@
 
     <div class="model-background">
         <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none" style="width: 25%; height: 25%; left: 20%; top: 30%; opacity: 0.2;">
-            <script>
-                // Випадковий ракурс для вокзалу
-                const randomCameraOrbitStation = `${Math.random() * 360}deg ${Math.random() * 180}deg 10m`;
-                document.getElementById('station').cameraOrbit = randomCameraOrbitStation;
-            </script>
         </model-viewer>
         <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none" style="width: 20%; height: 20%; left: 50%; top: 60%; opacity: 0.2;">
-            <script>
-                // Випадковий ракурс для будинку
-                const randomCameraOrbitHouse = `${Math.random() * 360}deg ${Math.random() * 180}deg 8m`;
-                document.getElementById('house').cameraOrbit = randomCameraOrbitHouse;
-            </script>
         </model-viewer>
         <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none" style="width: 15%; height: 15%; top: 5%; right: 5%; opacity: 0.2;">
-            <script>
-                // Випадковий ракурс для h2
-                const randomCameraOrbitH2 = `${Math.random() * 360}deg ${Math.random() * 180}deg 5m`;
-                document.getElementById('h2').cameraOrbit = randomCameraOrbitH2;
-            </script>
         </model-viewer>
     </div>
 </body>
