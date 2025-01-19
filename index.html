@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -22,8 +21,6 @@
             text-align: center;
             max-width: 700px;
             padding: 20px;
-            z-index: 10;
-            position: relative;
         }
 
         h1 {
@@ -82,15 +79,52 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 5;
+            z-index: -1;
             overflow: hidden;
         }
 
-        .circle {
+        /* Моделі на фоні */
+        .model-background {
             position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 6s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        model-viewer {
+            position: absolute;
+            z-index: -1;
+            background: rgba(0, 0, 0, 0.5); /* Трохи затемнити фон */
+        }
+
+        #station {
+            width: 400px;
+            height: 400px;
+            top: 25%;
+            left: 20%;
+        }
+
+        #house {
+            width: 250px;
+            height: 250px;
+            top: 30%;
+            left: 50%;
+        }
+
+        #h2 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 70%;
+        }
+
+        /* Відключення моделей на мобільних пристроях */
+        @media (max-width: 600px) {
+            .model-background {
+                display: none;
+            }
         }
 
         @keyframes float {
@@ -102,87 +136,6 @@
             }
         }
 
-        .circle:nth-child(1) {
-            width: 150px;
-            height: 150px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .circle:nth-child(2) {
-            width: 100px;
-            height: 100px;
-            top: 50%;
-            left: 80%;
-            animation-delay: 2s;
-        }
-
-        .circle:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            top: 30%;
-            left: 40%;
-            animation-delay: 4s;
-        }
-
-        .circle:nth-child(4) {
-            width: 120px;
-            height: 120px;
-            top: 70%;
-            left: 15%;
-            animation-delay: 3s;
-        }
-
-        .circle:nth-child(5) {
-            width: 180px;
-            height: 180px;
-            top: 20%;
-            left: 85%;
-            animation-delay: 1s;
-        }
-
-        .model-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        model-viewer {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            opacity: 0.3;
-            filter: blur(5px);
-            pointer-events: none;
-        }
-
-        #station {
-            top: 20%;
-            left: 10%;
-        }
-
-        #house {
-            bottom: 10%;
-            right: 15%;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            p {
-                font-size: 1rem;
-            }
-            a {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -194,8 +147,12 @@
         <div class="circle"></div>
     </div>
     <div class="model-background">
-        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none"></model-viewer>
-        <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none"></model-viewer>
+        <model-viewer id="station" src="station.glb" auto-rotate interaction-prompt="none" camera-controls ar ar-modes="webxr scene-viewer quick-look" 
+                      camera-orbit="random" field-of-view="35deg"></model-viewer>
+        <model-viewer id="house" src="h1.glb" auto-rotate interaction-prompt="none" camera-controls ar ar-modes="webxr scene-viewer quick-look" 
+                      camera-orbit="random" field-of-view="35deg"></model-viewer>
+        <model-viewer id="h2" src="h2.glb" auto-rotate interaction-prompt="none" camera-controls ar ar-modes="webxr scene-viewer quick-look" 
+                      camera-orbit="random" field-of-view="35deg"></model-viewer>
     </div>
     <div class="container">
         <h1>Ласкаво просимо!</h1>
@@ -208,5 +165,18 @@
             <a href="h1.html">Будинок 1, вулиця Шевченка</a>
         </div>
     </div>
+    <script>
+        // Генерація випадкового ракурсу камери
+        function randomizeCameraOrbit() {
+            const models = document.querySelectorAll('model-viewer');
+            models.forEach(model => {
+                const randomTheta = Math.random() * 360; // Випадковий горизонтальний кут
+                model.cameraOrbit = `${randomTheta}deg 75deg 2.5m`;
+            });
+        }
+
+        // Викликаємо функцію для випадкового ракурсу при завантаженні
+        window.onload = randomizeCameraOrbit;
+    </script>
 </body>
 </html>
